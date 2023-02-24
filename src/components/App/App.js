@@ -10,14 +10,14 @@ function App() {
   return (
     <section className="App">
       <header>
-        <p>Memory Match</p>
+        <p data-testid="brandName">Memory Match</p>
       </header>
       {/* the main content will be one of 5 pages, home, game, settings, leaderboard, about */}
       <main>
         <Home />
       </main>
       <footer>
-        <p>2023 copyright - memory match</p>
+        <p data-testid="footerCopyright">2023 Memory Match - All rights reserved.</p>
         <p>Developed by <a href="https://carlosealford.com">Carlos E Alford</a></p>
       </footer>
     </section>
