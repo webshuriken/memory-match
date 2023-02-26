@@ -1,9 +1,9 @@
 import React from "react";
 
 
-function GameButton() {
+function GameButton({bText}) {
   return (
-    <button>Text</button>
+    <button>{bText}</button>
   )
 }
 
