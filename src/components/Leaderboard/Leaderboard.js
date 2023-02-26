@@ -21,7 +21,7 @@ function Leaderboard() {
           </tr>
         </tbody>
       </table>
-      <Button />
+      <Button bText="Exit" />
     </section>
   )
 }
