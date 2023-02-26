@@ -5,7 +5,7 @@ function SidePanelTimer() {
   return (
     <div>
       <p>Timer</p>
-      <p>01:17</p>
+      <p>00:00</p>
     </div>
   )
 }

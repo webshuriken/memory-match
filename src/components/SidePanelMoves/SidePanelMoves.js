@@ -5,7 +5,7 @@ function SidePanelMoves() {
   return (
     <div>
       <p>Moves</p>
-      <p>17</p>
+      <p>0</p>
     </div>
   )
 }
