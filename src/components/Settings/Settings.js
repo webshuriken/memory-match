@@ -6,8 +6,8 @@ function Settings() {
   return (
     <section>
       <p>Settings needs to be designed</p>
-      <Button />
-      <Button />
+      <Button bText="Save" />
+      <Button bText="Exit" />
     </section>
   )
 }
