@@ -5,8 +5,8 @@ import Button from "../Button/Button";
 function About() {
   return (
     <section>
-      <p>A little something about the game and stuff</p>
-      <Button />
+      <p data-testid="aboutContent">A little something about the game and stuff</p>
+      <Button bText="Exit" />
     </section>
   )
 }
