@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react";
 
 
-function SidePanelTimer() {
+function SidePanelTimer({state}) {
   // array represents seconds, minutes
   const [mins, setMins] = useState(0);
   const [secs, setSecs] = useState(0);
+  const [intervalID, setIntervalID] = useState();
 
   // tictoc
   const updateTimer = () => setSecs(secs => secs + 1);
@@ -16,12 +17,16 @@ function SidePanelTimer() {
   }
   
   useEffect(() => {
-    const interval = setInterval(() => {
-      updateTimer();
-    }, 1000);
-  
-    return () => clearInterval(interval);
-  }, []);
+    if (state == 'active') {
+      const interval = setInterval(() => {
+        updateTimer();
+      }, 1000);
+      setIntervalID(interval);
+      return () => clearInterval(interval);
+    }
+    // make sure to clean up
+    return () => clearInterval(intervalID);
+  }, [state]);
   
   return (
     <div>
