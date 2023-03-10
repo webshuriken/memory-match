@@ -1,58 +1,46 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 
-function GameCards() {
+function GameCards({cards}) {
+  console.log("LOADING THE GAME CARDS")
+  /**
+   * TODO:
+   * 2. create a random order generator
+   * 3. spread it all around
+   */
+  const [deckOfCards, setDeckOfCards] = useState(false);
+
+
+  useEffect(() => {
+    // lets prep the starting deck of cards
+    // double the deck to create pairs
+    let deck = [...cards, ...cards];
+    deck = deck.map(card => ({
+      ...card,
+      id: Math.floor(Math.random * 102),
+      active: false,
+    }));
+    // cards ready for state
+    setDeckOfCards(() => deck);
+  }, []);
+
   return (
     <article>
       <ul>
-        <li>
-          <img src="#" alt="1" />
-        </li>
-        <li>
-          <img src="#" alt="2" />
-        </li>
-        <li>
-          <img src="#" alt="3" />
-        </li>
-        <li>
-          <img src="#" alt="4" />
-        </li>
-        <li>
-          <img src="#" alt="5" />
-        </li>
-        <li>
-          <img src="#" alt="6" />
-        </li>
-        <li>
-          <img src="#" alt="7" />
-        </li>
-        <li>
-          <img src="#" alt="8" />
-        </li>
-        <li>
-          <img src="#" alt="9" />
-        </li>
-        <li>
-          <img src="#" alt="10" />
-        </li>
-        <li>
-          <img src="#" alt="11" />
-        </li>
-        <li>
-          <img src="#" alt="12" />
-        </li>
-        <li>
-          <img src="#" alt="13" />
-        </li>
-        <li>
-          <img src="#" alt="14" />
-        </li>
-        <li>
-          <img src="#" alt="15" />
-        </li>
-        <li>
-          <img src="#" alt="16" />
-        </li>
+        {
+          deckOfCards ?
+            deckOfCards.map((card, i) => {
+              return (
+                <li
+                  key={i}
+                >
+                  {card.alt}
+                </li>
+              );
+            })
+          :
+          <li>Loading the card deck</li>
+        }
       </ul>
     </article>
   )
