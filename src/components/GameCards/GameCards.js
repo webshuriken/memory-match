@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 
 
-function GameCards({cards}) {
+function GameCards({cards, setGameMoves}) {
   const [deckOfCards, setDeckOfCards] = useState(false);
   // only job is to always hold the last card to be flipped
   const [lastFlip, setLastFlip] = useState({name: '', id: ''});
@@ -10,7 +10,7 @@ function GameCards({cards}) {
    * @description deal with a click event on a card
    */
   function handleClick(e) {
-    if (lastFlip.name == '') {
+    if (lastFlip.name === '') {
       setLastFlip(() => ({
         name: e.target.dataset.cardName,
         id: e.target.dataset.cardId
@@ -24,10 +24,11 @@ function GameCards({cards}) {
    * @description checks for pairs and updates the state depending on the check outcome
    */
   function checkFlip(name) {
+    console.log("CHECKING CARD FLIP")
     // when there is a match, update the state for the deck of cards
-    if (name == lastFlip.name) {
+    if (name === lastFlip.name) {
       setDeckOfCards(deck => deck.map(card => {
-        if (name == card.name) {
+        if (name === card.name) {
           return ({
             ...card,
             active: true
@@ -38,6 +39,8 @@ function GameCards({cards}) {
     }
     // at this stage we will always reset the last card flipped
     setLastFlip(() => ({name: '', id: ''}));
+    // player has flipped two pairs so it counts as a move
+    setGameMoves(state => state += 1);
   }
 
   useEffect(() => {
@@ -59,7 +62,7 @@ function GameCards({cards}) {
         {
           deckOfCards ?
             deckOfCards.map(card => {
-              let active = card.active || card.id == lastFlip.id;
+              let active = card.active || card.id === lastFlip.id;
               let classes = active ? 'card-item active' : 'card-item';
               // there must be a way to improve the code here..
               if (active) {
