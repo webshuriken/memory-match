@@ -2,23 +2,19 @@ import React, {useState, useEffect} from "react";
 
 
 function GameCards({cards}) {
-  console.log("LOADING THE GAME CARDS")
-  /**
-   * TODO:
-   * 2. create a random order generator
-   * 3. spread it all around
-   */
   const [deckOfCards, setDeckOfCards] = useState(false);
   // only job is to always hold the last card to be flipped
-  const [lastFlip, setLastFlip] = useState('');
+  const [lastFlip, setLastFlip] = useState({name: '', id: ''});
 
   /**
    * @description deal with a click event on a card
    */
   function handleClick(e) {
-    console.log("HANDLING THE CARD CLICK: ", lastFlip);
-    if (lastFlip === '') {
-      setLastFlip(() => e.target.dataset.cardName);
+    if (lastFlip.name == '') {
+      setLastFlip(() => ({
+        name: e.target.dataset.cardName,
+        id: e.target.dataset.cardId
+      }));
     }else{
       checkFlip(e.target.dataset.cardName);
     }
@@ -28,9 +24,8 @@ function GameCards({cards}) {
    * @description checks for pairs and updates the state depending on the check outcome
    */
   function checkFlip(name) {
-    console.log("CHECKING THE CARD FLIP");
     // when there is a match, update the state for the deck of cards
-    if (name == lastFlip) {
+    if (name == lastFlip.name) {
       setDeckOfCards(deck => deck.map(card => {
         if (name == card.name) {
           return ({
@@ -42,7 +37,7 @@ function GameCards({cards}) {
       }));
     }
     // at this stage we will always reset the last card flipped
-    setLastFlip(() => '');
+    setLastFlip(() => ({name: '', id: ''}));
   }
 
   useEffect(() => {
@@ -58,24 +53,39 @@ function GameCards({cards}) {
     setDeckOfCards(() => deck);
   }, []);
 
-  console.log("UPDATED DECK OF CARDS: ", deckOfCards);
-
   return (
     <article>
       <ul>
         {
           deckOfCards ?
             deckOfCards.map(card => {
-              return (
-                <li
-                  key={card.id}
-                  data-card-name={card.name}
-                  data-card-id={card.id}
-                  onClick={handleClick}
-                >
-                  {card.alt}
-                </li>
-              );
+              let active = card.active || card.id == lastFlip.id;
+              let classes = active ? 'card-item active' : 'card-item';
+              // there must be a way to improve the code here..
+              if (active) {
+                return (
+                  <li
+                    data-card-name={card.name}
+                    data-card-id={card.id}
+                    key={card.id}
+                    className={classes}
+                  >
+                    {card.alt}
+                  </li>
+                );
+              }else{
+                return (
+                  <li
+                    data-card-name={card.name}
+                    data-card-id={card.id}
+                    key={card.id}
+                    className={classes}
+                    onClick={handleClick}
+                  >
+                    {card.alt}
+                  </li>
+                )
+              }
             })
           :
           <li>Loading the card deck</li>
