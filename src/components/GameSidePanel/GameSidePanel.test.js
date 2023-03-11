@@ -30,3 +30,13 @@ test('renders two game buttons', () => {
   const buttons = screen.getAllByRole('button');
   expect(buttons.length).toBe(2);
 });
+
+test('renders the moves section with Moves as text', () => {
+  const moves = screen.getByText(/Moves/i);
+  expect(moves).toBeTruthy();
+});
+
+test('renders a starting moves at 0', () => {
+  const moves = screen.getByText(/^0$/i);
+  expect(moves).toBeTruthy();
+});
