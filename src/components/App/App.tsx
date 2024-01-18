@@ -1,12 +1,12 @@
 import './App.css';
-import Home from '../Home/Home.js';
+import Home from '../Home/Home';
 import Game from '../Game/Game.js';
 import Leaderboard from '../Leaderboard/Leaderboard.js';
 import About from '../About/About.js';
 import Settings from '../Settings/Settings';
 
 
-function App() {
+export default function App(): JSX.Element {
   return (
     <section className="App">
       <header>
@@ -23,5 +23,3 @@ function App() {
     </section>
   );
 }
-
-export default App;
