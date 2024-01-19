@@ -6,13 +6,16 @@ import About from '../About/About.js';
 import Settings from '../Settings/Settings';
 
 
+// TODO:
+// - Implemente react router
+// - I dont know if i want to separate the Header and Footer into their own components..
+// - Import and use the Nav component
 export default function App(): JSX.Element {
   return (
     <section className="App">
       <header>
-        <p data-testid="brandName">Memory Match</p>
+        <h2>Memory Match</h2>
       </header>
-      {/* the main content will be one of 5 pages, home, game, settings, leaderboard, about */}
       <main>
         <Home />
       </main>
