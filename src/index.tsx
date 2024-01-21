@@ -6,7 +6,8 @@ import {
 } from 'react-router-dom';
 import './index.css';
 import App from './components/App/App';
-import Play from './components/Play/Play';
+import RouteError from './components/RouteError';
+import Play from './routes/Play/Play';
 
 
 // router
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <RouteError />,
     children: [
       {
         path: '/',
