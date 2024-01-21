@@ -1,15 +1,51 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {
+  createBrowserRouter,
+  RouterProvider
+} from 'react-router-dom';
 import './index.css';
-import App from './components/App/App';
+import App from './routes/App/App';
+import RouteError from './components/RouteError';
+import Play from './routes/Play/Play';
+import Leaderboard from './routes/Leaderboard/Leaderboard';
+import Settings from './routes/Settings/Settings';
+import About from './routes/About/About';
 
+
+// router
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <RouteError />,
+    children: [
+      {
+        path: '/',
+        element: <Play />
+      },
+      {
+        path: 'leaderboard',
+        element: <Leaderboard />
+      },
+      {
+        path: 'settings',
+        element: <Settings />
+      },
+      {
+        path: 'about',
+        element: <About />
+      },
+    ]
+  }
+])
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
