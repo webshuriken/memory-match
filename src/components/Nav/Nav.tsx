@@ -10,7 +10,7 @@ export default function Nav(): JSX.Element {
   }
   return (
     <div>
-      <button onClick={handleClick}>
+      <button onClick={handleClick} aria-haspopup={'menu'} aria-expanded={false}>
         <label htmlFor="menu-button">Menu</label>
       </button>
       <input type="checkbox" id="menu-button" />
