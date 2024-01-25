@@ -2,7 +2,7 @@ import { render, screen, waitFor, within, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
-import Play from '../Play/Play';
+import Game from '../Game/Game';
 import Leaderboard from '../Leaderboard/Leaderboard';
 import Settings from '../Settings/Settings';
 import About from '../About/About';
@@ -15,7 +15,7 @@ beforeEach(() => {
     <MemoryRouter initialEntries={['/']}>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route path="/" element={<Play />} />
+          <Route path="/" element={<Game />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/about" element={<About />} />
@@ -76,9 +76,9 @@ describe('Renders all the routes when user clicks on nav link', () => {
     beforeEach(() => {
       navigation = screen.getByRole('navigation');
       
-      // click on the Play (home) button to load page
+      // click on the Game (home) button to load page
       act(() => {
-        userEvent.click(within(navigation).getByText(/play/i));
+        userEvent.click(within(navigation).getByText(/game/i));
       });
     });
 
@@ -111,7 +111,7 @@ describe('Renders all the routes when user clicks on nav link', () => {
     beforeEach(() => {
       navigation = screen.getByRole('navigation');
       
-      // click on the Play (home) button to load page
+      // click on the leaderboard button to load page
       act(() => {
         userEvent.click(within(navigation).getByText(/leaderboard/i));
       });
@@ -140,7 +140,7 @@ describe('Renders all the routes when user clicks on nav link', () => {
     beforeEach(() => {
       navigation = screen.getByRole('navigation');
       
-      // click on the Play (home) button to load page
+      // click on the settings button to load page
       act(() => {
         userEvent.click(within(navigation).getByText(/settings/i));
       });
@@ -164,7 +164,7 @@ describe('Renders all the routes when user clicks on nav link', () => {
     beforeEach(() => {
       navigation = screen.getByRole('navigation');
       
-      // click on the Play (home) button to load page
+      // click on the About button to load page
       act(() => {
         userEvent.click(within(navigation).getByText(/settings/i));
       });
