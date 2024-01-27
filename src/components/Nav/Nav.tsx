@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { ChangeEvent, MouseEventHandler, useState } from "react"
+import { useState } from "react"
 
 
 export default function Nav(): JSX.Element {
