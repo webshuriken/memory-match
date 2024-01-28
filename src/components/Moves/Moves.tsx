@@ -1,4 +1,4 @@
-export default function Moves({ children }: {children: string}) {
+export default function Moves({ children }: {children: string}): JSX.Element {
   return (
     <article>
       <p>Moves</p>
