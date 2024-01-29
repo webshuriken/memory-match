@@ -1,13 +1,15 @@
-type Props = {
-  children: string
-}
+import { useContext } from "react";
+import { MovesContext } from "../../context/MovesContext";
 
-export default function Moves({ children }: Props): JSX.Element {
+
+export default function Moves(): JSX.Element {
+  const moves = useContext(MovesContext);
+
   return (
     <article>
       <p>Moves</p>
       <p>
-        <span>{children}</span>
+        <span>{moves}</span>
       </p>
     </article>
   )
