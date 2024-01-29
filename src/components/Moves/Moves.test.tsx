@@ -1,12 +1,13 @@
-import {render, screen, within} from '@testing-library/react';
+import { act, cleanup, render, screen, within } from '@testing-library/react';
 import Moves from './Moves';
+import { MovesContext } from '../../context/MovesContext';
 
 
 describe('Moves component renders', () => {
   let mother: HTMLElement;
 
   beforeEach(() => {
-    render(<Moves>0</Moves>);
+    render(<Moves />);
     mother = screen.getByRole('article');
   });
 
@@ -24,10 +25,16 @@ describe('Moves component renders', () => {
   });
 });
 
-// separate this test as I need to pass a different child to it
-test('the components children appear as they should', () => {
-  render(<Moves>1</Moves>);
-  let mother: HTMLElement = screen.getByRole('article');
+describe('Moves text reflects a users move', () => {
+  test('lets move twice and see the number 2', () => {
+    const expectedText = 2;
 
-  expect(within(mother).getByText('1')).toBeInTheDocument();
+    render(
+      <MovesContext.Provider value={expectedText}>
+        <Moves />
+      </MovesContext.Provider>
+    );
+    
+    expect(screen.getByText(expectedText)).toBeInTheDocument();
+  });
 });
