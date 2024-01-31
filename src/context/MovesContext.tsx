@@ -1,4 +1,4 @@
-import { createContext, useReducer, Dispatch } from "react";
+import { createContext, useReducer, useContext, Dispatch } from "react";
 
 
 type Props = {
@@ -21,7 +21,7 @@ export const MovesDispatchContext = createContext<Dispatch<MovesActionType> | nu
  * @param param Children 
  * @returns JSX element wrapped with the moves context
  */
-export function MovesProvider({ children }: Props): any {
+export function MovesProvider({ children }: Props): JSX.Element {
   const [moves, dispatch] = useReducer(movesReducer, { counter: 0 });
 
   return (
@@ -33,6 +33,14 @@ export function MovesProvider({ children }: Props): any {
       </MovesDispatchContext.Provider>
     </MovesContext.Provider>
   )
+}
+
+export function useMovesContext() {
+  return useContext(MovesContext);
+}
+
+export function useMovesDispatch() {
+  return useContext(MovesDispatchContext);
 }
 
 function movesReducer(state: MovesStateInterface, action: MovesActionType) {
