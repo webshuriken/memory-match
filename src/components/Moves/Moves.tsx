@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import { MovesContext } from "../../context/MovesContext";
+import { useMovesContext } from "../../context/MovesContext";
 
 
 export default function Moves(): JSX.Element {
-  const moves = useContext(MovesContext);
+  const moves = useMovesContext();
 
   return (
     <article>
