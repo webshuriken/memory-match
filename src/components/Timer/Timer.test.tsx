@@ -1,23 +1,34 @@
+
 import {render, screen, within} from '@testing-library/react';
-import Timer from './Timer'
+import Timer from './Timer';
+import { TimerProvider } from '../../context/TimerContext';
 
 
-describe('tests Timer component basics', () => {
-  beforeEach(() => {
-    render(<Timer>00:00</Timer>);
-  });
+describe('Timer component', () => {
+  describe('fresh view of timer', () => {
+    let mama: HTMLElement;
 
-  test('has text saying Timer', () => {
-    expect(screen.getByText(/Timer/)).toBeInTheDocument();
-  });
-  
-  test('has element with role, timer', () => {
-    expect(screen.getByRole('timer')).toBeInTheDocument();
-  });
-  
-  test('starting text within timer is 00:00', () => {
-    const expectedText = '00:00';
-    expect(screen.getByRole('timer').textContent).toBe(expectedText);
+    beforeEach(() => {
+      render(
+        <TimerProvider>
+          <Timer />
+        </TimerProvider>
+      );
+      mama = screen.getByRole('article');
+    });
+
+    test('has text saying Timer', () => {
+      expect(within(mama).getByText(/Timer/)).toBeInTheDocument();
+    });
+    
+    test('has element with role, timer', () => {
+      expect(within(mama).getByRole('timer')).toBeInTheDocument();
+    });
+    
+    test('starting text within timer is 00:00', () => {
+      const expectedText = '00:00';
+      expect(within(mama).getByRole('timer').textContent).toBe(expectedText);
+    });
   });
 });
 
