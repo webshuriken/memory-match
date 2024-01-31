@@ -48,7 +48,7 @@ function movesReducer(state: MovesStateInterface, action: MovesActionType) {
     case 'add':
       return { counter: state.counter + 1 };
     case 'reset':
-      return state = { counter: 0 }
+      return { counter: 0 }
     default:
       return state;
   }
