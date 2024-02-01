@@ -35,9 +35,7 @@ export default function Timer(): JSX.Element {
   return (
     <article>
       <p>Timer</p>
-      <div role="timer">
-        <span>{mins}</span>:<span>{secs}</span>
-      </div>
+      <div role="timer" aria-label="game timer">{mins}:{secs}</div>
     </article>
   )
 }
