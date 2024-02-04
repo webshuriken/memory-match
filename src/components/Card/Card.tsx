@@ -10,9 +10,9 @@ export type Props = {
   card: {
     src: string;
     flipped?: boolean;
-    id?: string;
+    id?: number;
   },
-  handleClick: (a: string) => void;
+  handleClick: (a: number) => void;
 }
 
 export default function Card({
@@ -21,7 +21,7 @@ export default function Card({
   alt,
   handleClick
 }: Props): JSX.Element {
-  const [cardID, setCardID] = useState<string>(id!);
+  const [cardID, setCardID] = useState<number>(id!);
 
   return (
     <div role="button" aria-label="game card" onClick={() => handleClick(cardID) }>
