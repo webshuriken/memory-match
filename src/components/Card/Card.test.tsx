@@ -12,7 +12,7 @@ const cardDetails:Props = {
   card: {
     src: '#',
     flipped: false,
-    id: '1'
+    id: 1
   },
   handleClick: jest.fn()
 }
