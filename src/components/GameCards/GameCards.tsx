@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Card from "../Card/Card";
-import { Cards, CardFaces, DeckOfCards } from "../GamePlay/GamePlay";
+import { Cards, CardFaces } from '../../globals/types'
 
 
 type Props = {

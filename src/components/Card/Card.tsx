@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CardFaces } from "../GamePlay/GamePlay";
+import { CardFaces } from "../../globals/types";
 
 
 export interface Props {

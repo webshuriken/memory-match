@@ -1,6 +1,6 @@
 import {render, screen, within} from '@testing-library/react';
 import GameCards from './GameCards'
-import { DeckOfCards } from '../GamePlay/GamePlay.js';
+import { DeckOfCards } from '../../globals/types';
 
 
 // deck of card object demo
