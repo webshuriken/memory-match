@@ -18,7 +18,7 @@ export default function GameDash(): JSX.Element {
   }
 
   return (
-    <div>
+    <>
       <div>
         <ButtonChip value='Reset' handleClick={resetDash} />
       </div>
@@ -30,6 +30,6 @@ export default function GameDash(): JSX.Element {
           <Timer />
         </div>
       </section>
-    </div>
+    </>
   );
 }
