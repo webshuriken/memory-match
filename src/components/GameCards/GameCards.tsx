@@ -49,6 +49,7 @@ export default function GameCards({ cards, handleMatchFound }: Props): JSX.Eleme
       // use state and passed in argument to check
       if (id !== lastCardFlip.id && pairID === lastCardFlip.pairID) {
         matchFound = true;
+        handleMatchFound(); // dealt by parent
       }
 
       // create an update for the state depending on matchFound
@@ -75,7 +76,6 @@ export default function GameCards({ cards, handleMatchFound }: Props): JSX.Eleme
       });
 
       // update the states
-      handleMatchFound(); // dealt by parent
       setCardDeck(prevState => prevState === null ? prevState : { ...prevState, faces: update });
       setLastCardFlip(prevState => prevState === null ? prevState : { id: undefined, pairID: undefined });
     }
