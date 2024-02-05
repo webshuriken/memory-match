@@ -52,7 +52,7 @@ const desckOfCards: DeckOfCards = {
 
 describe('Game Cards component', () => {
   beforeEach(() => {
-    render(<GameCards cards={desckOfCards.cards} hanldeMatchFound={jest.fn} />);
+    render(<GameCards cards={desckOfCards.cards} handleMatchFound={jest.fn} />);
   });
 
   test('renders with no issues', () => {

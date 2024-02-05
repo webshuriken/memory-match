@@ -5,7 +5,7 @@ import { Cards, CardFaces } from '../../globals/types'
 
 type Props = {
   cards: Cards;
-  hanldeMatchFound: () => void;
+  handleMatchFound: () => void;
 }
 
 interface LastCardFlip {
@@ -13,7 +13,7 @@ interface LastCardFlip {
   pairID: number| undefined;
 }
 
-export default function GameCards({ cards, hanldeMatchFound }: Props): JSX.Element {
+export default function GameCards({ cards, handleMatchFound }: Props): JSX.Element {
   const [cardDeck, setCardDeck] = useState<Cards | null>(null);
   const [lastCardFlip, setLastCardFlip] = useState<LastCardFlip>({ id: undefined, pairID: undefined });
   const { cover, alt, faces } = cards;
@@ -75,7 +75,7 @@ export default function GameCards({ cards, hanldeMatchFound }: Props): JSX.Eleme
       });
 
       // update the states
-      hanldeMatchFound(); // dealt by parent
+      handleMatchFound(); // dealt by parent
       setCardDeck(prevState => prevState === null ? prevState : { ...prevState, faces: update });
       setLastCardFlip(prevState => prevState === null ? prevState : { id: undefined, pairID: undefined });
     }
