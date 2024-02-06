@@ -4,11 +4,15 @@ import InputText from "./InputText";
 
 
 describe('renders the InputText component', () => {
-
+  const handleInputMock = jest.fn();
   let theLabel: HTMLElement;
 
+  handleInputMock.mockImplementation((value: string): string => {
+    return value;
+  });
+
   beforeEach(() => {
-    render(<InputText />);
+    render(<InputText value='Elliott Dorian' handleInput={handleInputMock} />);
     theLabel = screen.getByRole('textbox').parentElement as HTMLElement;
   });
 
@@ -31,7 +35,7 @@ describe('renders the InputText component', () => {
   });
 
   test('the input placeholder has correct text', () => {
-    const placeholderText = 'enter your name';
+    const placeholderText = 'max 20 characters';
     expect(within(theLabel).getByPlaceholderText(placeholderText));
   });
 
