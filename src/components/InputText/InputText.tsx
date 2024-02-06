@@ -1,17 +1,16 @@
 import { ChangeEvent, useState } from "react";
 
 
-export default function InputText(): JSX.Element {
-  const [value, setValue] = useState('');
-  
-  function handleInput(e: ChangeEvent<HTMLInputElement>) {
-    setValue(e.target.value);
-  }
+type Props = {
+  handleInput: (value: ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+}
 
+export default function InputText({ handleInput, value }: Props): JSX.Element {
   return (
     <label>
       <span>enter your name</span>
-      <input placeholder="enter your name" type="text" name="name" value={value} onChange={handleInput} />
+      <input placeholder="max 20 characters" type="text" name="name" value={value} onChange={handleInput} />
     </label>
   )
 }
