@@ -3,16 +3,11 @@ import userEvent from "@testing-library/user-event";
 import InputText from "./InputText";
 
 
-describe('renders the InputText component', () => {
-  const handleInputMock = jest.fn();
+describe('InputText component', () => {
   let theLabel: HTMLElement;
 
-  handleInputMock.mockImplementation((value: string): string => {
-    return value;
-  });
-
   beforeEach(() => {
-    render(<InputText value='Elliott Dorian' handleInput={handleInputMock} />);
+    render(<InputText handlePlayerName={jest.fn} />);
     theLabel = screen.getByRole('textbox').parentElement as HTMLElement;
   });
 
@@ -30,24 +25,29 @@ describe('renders the InputText component', () => {
     expect(input).toBeInTheDocument();
   });
 
-  test('the input element has a start value of empty string', () => {
-    expect(within(theLabel).getByRole('textbox')).toHaveTextContent('');
-  });
-
-  test('the input placeholder has correct text', () => {
+  test('placeholder has correct text', () => {
     const placeholderText = 'max 20 characters';
-    expect(within(theLabel).getByPlaceholderText(placeholderText));
+    expect(within(theLabel).getByPlaceholderText(placeholderText)).toBeInTheDocument();
   });
 
-  test('the input value updates when user types in', () => {
+  test('input initially renders with no text', () => {
+    const expectedText = ''
     const input: HTMLInputElement = within(theLabel).getByRole('textbox');
-    const userText = 'Elliott Dorian'
+
+    expect(input.value).toBe('');
+  });
+
+  test('user can only enter 20 characters', () => {
+    const userInput = 'Receive it with arms wide open'
+    const expectedText = 'Receive it with arms'
+    const input: HTMLInputElement = within(theLabel).getByRole('textbox');
 
     act(() => {
-      userEvent.type(input, userText);
+      userEvent.type(input, userInput)
     });
 
-    expect(input.value).toMatch(userText);
+    expect(input.value).toBe(expectedText);
+    expect(input.value).toHaveLength(20);
   });
 
 });
