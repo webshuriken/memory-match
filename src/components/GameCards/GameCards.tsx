@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Card from "../Card/Card";
 import { Cards, CardFaces } from '../../globals/types'
+import { useTimerDispatch, useTimerContext } from "../../context/TimerContext";
 
 
 type Props = {
@@ -14,6 +15,10 @@ interface LastCardFlip {
 }
 
 export default function GameCards({ cards, handleMatchFound }: Props): JSX.Element {
+  // timer context
+  const {ticking} = useTimerContext();
+  const timerDispatch = useTimerDispatch();
+  // component state
   const [cardDeck, setCardDeck] = useState<Cards | null>(null);
   const [lastCardFlip, setLastCardFlip] = useState<LastCardFlip>({ id: undefined, pairID: undefined });
   const { cover, alt, faces } = cards;
@@ -26,6 +31,8 @@ export default function GameCards({ cards, handleMatchFound }: Props): JSX.Eleme
   function handleClick({ id, pairID }: { id: number, pairID: number }): void {
     // catch null states
     if (cardDeck === null) return;
+
+    if (!ticking && timerDispatch !== null) { timerDispatch({ type: 'start' }); }
   
     // are we looking to match previous card flip
     if (lastCardFlip.id === undefined) {
