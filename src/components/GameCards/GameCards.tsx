@@ -27,7 +27,7 @@ export default function GameCards({ cards, handleMatchFound }: Props): JSX.Eleme
   const { cover, alt, faces } = cards;
 
  /**
-  * receives the id, pairID to find a match or store to be matched
+  * receives the id, pairID to find a match or store to be matched from a card click
   * @param {<{id: number, pairID: number}>} object - card values passed in
   * @returns 
   */
