@@ -16,7 +16,7 @@ const cards: Cards = {
 
 describe('GamePlay component', () => {
   beforeEach(() => {
-    render(<GamePlay cards={cards} gameInProgress={jest.fn} />);
+    render(<GamePlay cards={cards} setGameReady={jest.fn} />);
   });
 
   test('game component renders', () => {
