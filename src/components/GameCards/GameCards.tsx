@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import Card from "../Card/Card";
-import { Cards, CardFaces } from '../../globals/types'
+import { CardsIntfc, CardFacesIntfc } from '../../globals/types'
 import { useTimerDispatch, useTimerContext } from "../../context/TimerContext";
 import { useMovesDispatch } from "../../context/MovesContext";
 
 
 type Props = {
-  cards: Cards;
+  cards: CardsIntfc;
   handleMatchFound: () => void;
 }
 
@@ -22,7 +22,7 @@ export default function GameCards({ cards, handleMatchFound }: Props): JSX.Eleme
   // moves context
   const movesDispatch = useMovesDispatch();
   // component state
-  const [cardDeck, setCardDeck] = useState<Cards | null>(null);
+  const [cardDeck, setCardDeck] = useState<CardsIntfc | null>(null);
   const [lastCardFlip, setLastCardFlip] = useState<LastCardFlip>({ id: undefined, pairID: undefined });
   const { cover, alt, faces } = cards;
 
@@ -41,7 +41,7 @@ export default function GameCards({ cards, handleMatchFound }: Props): JSX.Eleme
   
     // are we looking to match previous card flip
     if (lastCardFlip.id === undefined) {
-      const update: CardFaces[] = cardDeck.faces.map(face => {
+      const update: CardFacesIntfc[] = cardDeck.faces.map(face => {
         if (face.id === id) {
           return {
             ...face, 
@@ -65,7 +65,7 @@ export default function GameCards({ cards, handleMatchFound }: Props): JSX.Eleme
       }
 
       // create an update for the state depending on matchFound
-      const update: CardFaces[] = cardDeck.faces.map((face) => {
+      const update: CardFacesIntfc[] = cardDeck.faces.map((face) => {
         if (matchFound) {
           // flip the switch on latest flip
           if (face.id === id) {
@@ -95,13 +95,13 @@ export default function GameCards({ cards, handleMatchFound }: Props): JSX.Eleme
 
   /**
    * Shuffles the cards, augmenting them with flipped state and uniqueIDs
-   * @param {CardFaces[]} cards - a set of cards to shuffle
-   * @returns {CardFaces[]}
+   * @param {CardFacesIntfc[]} cards - a set of cards to shuffle
+   * @returns {CardFacesIntfc[]}
    */
-  function shuffleCards(cards: CardFaces[]): CardFaces[] {
+  function shuffleCards(cards: CardFacesIntfc[]): CardFacesIntfc[] {
     const randSet: number[] = createRandomIDs(cards.length - 1);
 
-    const shuffledCards: CardFaces[] = [];
+    const shuffledCards: CardFacesIntfc[] = [];
     for (let i=0; i<cards.length; i++) {
       shuffledCards.push(cards[randSet[i]]);
     }
@@ -162,8 +162,8 @@ export default function GameCards({ cards, handleMatchFound }: Props): JSX.Eleme
     const randomIDs: number[] = createRandomIDs((faces.length * 2 ) - 1);
 
     // add the required meta to each card, while creating their double
-    const cardsMeta:CardFaces[] = faces.reduce((prev: CardFaces[], curr: CardFaces, i: number) => {
-      let meta:CardFaces = {
+    const cardsMeta:CardFacesIntfc[] = faces.reduce((prev: CardFacesIntfc[], curr: CardFacesIntfc, i: number) => {
+      let meta:CardFacesIntfc = {
         ...curr,
         id: randomIDs.pop(),
         pairID: i,
@@ -173,7 +173,7 @@ export default function GameCards({ cards, handleMatchFound }: Props): JSX.Eleme
       return [...prev, meta, { ...meta, id: randomIDs.pop() }];
     }, []);
 
-    const shuffledCards: CardFaces[] = shuffleCards(cardsMeta);
+    const shuffledCards: CardFacesIntfc[] = shuffleCards(cardsMeta);
     
     // update the component state with augmented/shuffled faces
     setCardDeck({ cover, alt, faces: shuffledCards });

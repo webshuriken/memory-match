@@ -1,7 +1,5 @@
 import { act, render, within, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import GameDash from "./GameDash";
-import { MovesProvider } from "../../context/MovesContext";
 
 
 describe('GameDash component', () => {

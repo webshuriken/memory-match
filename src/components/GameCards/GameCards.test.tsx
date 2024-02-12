@@ -1,10 +1,10 @@
 import {render, screen, within} from '@testing-library/react';
 import GameCards from './GameCards'
-import { DeckOfCards } from '../../globals/types';
+import { DeckOfCardsIntfc } from '../../globals/types';
 
 
 // deck of card object demo
-const desckOfCards: DeckOfCards = {
+const desckOfCards: DeckOfCardsIntfc = {
   author: {
     name: [
       'Amy Sutton',

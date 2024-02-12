@@ -1,11 +1,11 @@
 import { useState } from "react";
 import GameCards from "../GameCards/GameCards";
 import GameDash from "../GameDash/GameDash";
-import { Cards } from "../../globals/types";
+import { CardsIntfc } from "../../globals/types";
 
 
 type Props = {
-  cards: Cards;
+  cards: CardsIntfc;
   setGameReady: (value: boolean) => void;
 }
 
