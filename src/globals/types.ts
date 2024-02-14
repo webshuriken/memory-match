@@ -1,25 +1,35 @@
-export interface CardFaces {
+// INTERFACES
+export interface CardFacesIntfc {
   src: string;
   id?: number;
   pairID?: number;
   flipped?: boolean;
 }
 
-export interface Cards {
+export interface CardsIntfc {
   alt: string;
-  faces: CardFaces[];
+  faces: CardFacesIntfc[];
   cover: {
     alt: string;
     src: string;
   };
 }
 
-export interface DeckOfCards {
+export interface DeckOfCardsIntfc {
   author: {
     name: string | string[];
     site: string | string[];
   }
-  cards: Cards;
+  cards: CardsIntfc;
   size: number;
   theme: string;
+}
+
+// TYPES
+export type LeaderboardType = {
+  id: string;
+  name: string;
+  time: string;
+  moves: number;
+  position: number;
 }
