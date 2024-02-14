@@ -1,9 +1,9 @@
 import { screen, render, within } from "@testing-library/react";
 import GamePlay from "./GamePlay";
-import { Cards } from "../../globals/types";
+import { CardsIntfc } from "../../globals/types";
 
 
-const cards: Cards = {
+const cards: CardsIntfc = {
   alt: 'no peaking',
   faces: [{
     src: '#'
