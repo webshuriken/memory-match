@@ -2,6 +2,22 @@ import { LeaderboardType, DeckOfCardsIntfc } from "./types"
 import cardPlaceholderURL from './cards-placeholder.png';
 
 
+// TODO: FEAT-Game-1: how we expose this data can be changed
+// exposes the images public id for the faces and cover.
+export const CloudinaryCardsList: { faces: string[]; cover: string } = {
+  faces: [
+    'cards-blue_hair_uubbsf.png',
+    'cards-haku_oxsscv.png',
+    'cards-plant_me_thzzz5.png',
+    'cards-dragon_plfggm.png',
+    'cards-swirl_lady_gagxsr.png',
+    'cards-spiral_eye_ueslyj.png',
+    'cards-red_hair_f2hosm.png',
+    'cards-yuki_greig0'
+  ],
+  cover: 'cards-cover_tusv76.png'
+}
+
 // exposes a deck of cards
 export const DeckOfCards: DeckOfCardsIntfc = {
   author: {
@@ -42,7 +58,6 @@ export const DeckOfCards: DeckOfCardsIntfc = {
   theme: 'poker ala doodles'
 }
 
-// TODO : FIGURE A WAY TO WORK OUT THE SCORE
 // exposes game data until we setup a proper backend
 export const InitLeaderboard: LeaderboardType[] = [{
   id: 'r33r',
