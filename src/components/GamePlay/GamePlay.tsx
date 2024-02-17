@@ -1,24 +1,23 @@
 import { useState } from "react";
 import GameCards from "../GameCards/GameCards";
 import GameDash from "../GameDash/GameDash";
-import { Cards } from "../../globals/types";
+import { CardsIntfc } from "../../globals/types";
 
 
 type Props = {
-  cards: Cards;
-  gameInProgress: (value: boolean) => void;
+  cards: CardsIntfc;
+  setGameReady: (value: boolean) => void;
 }
 
-export default function GamePlay({ cards, gameInProgress }: Props): JSX.Element {
+export default function GamePlay({ cards, setGameReady }: Props): JSX.Element {
   const [matchesFound, setMatchesFound] = useState<number>(0);
 
   /**
    * Takes care when a matching pair is found
    */
-  function handleMatchFound() {
-    // when we have found all matches, make parent aware
+  function handleMatchFound(): void {
     if (cards.faces.length === matchesFound) {
-      gameInProgress(true)
+      setGameReady(false)
     }else{
       setMatchesFound(prevState => prevState + 1);
     }

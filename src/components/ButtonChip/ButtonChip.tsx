@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 // what handle click does will depend on the component that summons it
 interface Props {
-  handleClick: () => void;
+  handleClick: (event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>) => void;
   url?: string;
   value: string;
 }
@@ -14,12 +14,12 @@ export default function ButtonChip({
   value = 'Button'
 }: Props): JSX.Element {
   // Check to see if space or enter were pressed.
-  function handleBtnKeyDown(e: React.KeyboardEvent<HTMLAnchorElement> | React.KeyboardEvent<HTMLButtonElement>) {
+  function handleBtnKeyDown(e: React.KeyboardEvent<HTMLButtonElement>) {
     // "Spacebar" for IE11 support
     if (e.key === " " || e.key === "Enter" || e.key === "Spacebar") {
       // Prevent the default action to stop scrolling when space is pressed
       e.preventDefault();
-      handleClick();
+      handleClick(e);
     }
   }
 

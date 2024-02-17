@@ -1,9 +1,9 @@
 import { screen, render, within } from "@testing-library/react";
 import GamePlay from "./GamePlay";
-import { Cards } from "../../globals/types";
+import { CardsIntfc } from "../../globals/types";
 
 
-const cards: Cards = {
+const cards: CardsIntfc = {
   alt: 'no peaking',
   faces: [{
     src: '#'
@@ -16,7 +16,7 @@ const cards: Cards = {
 
 describe('GamePlay component', () => {
   beforeEach(() => {
-    render(<GamePlay cards={cards} gameInProgress={jest.fn} />);
+    render(<GamePlay cards={cards} setGameReady={jest.fn} />);
   });
 
   test('game component renders', () => {

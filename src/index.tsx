@@ -7,7 +7,7 @@ import {
 import './index.css';
 import App from './routes/App/App';
 import RouteError from './components/RouteError';
-import Play from './routes/Play/Play';
+import Game from './routes/Game/Game';
 import Leaderboard from './routes/Leaderboard/Leaderboard';
 import Settings from './routes/Settings/Settings';
 import About from './routes/About/About';
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Play />
+        element: <Game />
       },
       {
         path: 'leaderboard',

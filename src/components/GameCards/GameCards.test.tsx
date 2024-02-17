@@ -1,58 +1,16 @@
 import {render, screen, within} from '@testing-library/react';
-import GameCards from './GameCards'
-import { DeckOfCards } from '../../globals/types';
+import GameCards from './GameCards';
+import { DeckOfCards } from '../../globals/gameData';
 
-
-// deck of card object demo
-const desckOfCards: DeckOfCards = {
-  author: {
-    name: [
-      'Amy Sutton',
-      'Carlos E Alford'
-    ],
-    site: [
-      'https://amythehatter.com/',
-      'https:carlosealford.com/'
-    ]
-  },
-  cards: {
-    alt: 'no peaking',
-    faces: [{
-      src: '#'
-    },
-    {
-      src: '#'
-    },
-    {
-      src: '#'
-    },
-    {
-      src: '#'
-    },
-    {
-      src: '#'
-    },
-    {
-      src: '#'
-    },
-    {
-      src: '#'
-    },
-    {
-      src: '#'
-    }],
-    cover: {
-      alt: 'poker mixed with some old doodles',
-      src: '#'
-    },
-  },
-  size: 8,
-  theme: 'poker'
-}
 
 describe('Game Cards component', () => {
+  let list: HTMLElement;
+  let items: HTMLElement[];
+
   beforeEach(() => {
-    render(<GameCards cards={desckOfCards.cards} handleMatchFound={jest.fn} />);
+    render(<GameCards cards={DeckOfCards.cards} handleMatchFound={jest.fn} />);
+    list = screen.getByRole('list');
+    items = within(list).getAllByRole('listitem');
   });
 
   test('renders with no issues', () => {
@@ -60,21 +18,37 @@ describe('Game Cards component', () => {
   });
 
   test('has element with role: list', () => {
-    const ul = screen.getByRole('list');
-    expect(ul).toBeInTheDocument();
+    expect(list).toBeInTheDocument();
   });
 
   // generic test, as the game currently only handles a deck of 8 cards
-  test('renders correct number of list items', () => {
-    const ul = screen.getByRole('list');
-    const li = within(ul).getAllByRole('listitem');
-    expect(li).toHaveLength(16);
+  test('list has 16 items', () => {
+    expect(items).toHaveLength(16);
   });
   
-  test('list items, enclose element with role: button', () => {
-    const ul = screen.getByRole('list');
-    const li = within(ul).getAllByRole('listitem');
-    const button = within(li[0]).getByRole('button');
+  test('inside each items,there is element with role: button', () => {
+    const button = within(items[0]).getByRole('button');
     expect(button).toBeInTheDocument();
+  });
+
+  test('each role: button has 2 images', () => {
+    const images = within(items[0]).getAllByRole('img');
+    expect(images).toHaveLength(2);
+  });
+
+  test('cover image has src = "cards-placeholder.png" with alt = "poker mixed with some old doodles"', () => {
+    const imgSrc = 'cards-placeholder.png';
+    const imgAlt = 'poker mixed with some old doodles';
+    const images = within(items[0]).getAllByRole('img');
+    expect(images[0]).toHaveAttribute('src', imgSrc);
+    expect(images[0]).toHaveAttribute('alt', imgAlt);
+  });
+
+  test('face image has src = "cards-placeholder.png" with alt = "this is a memory card so, no peaking"', () => {
+    const imgSrc = 'cards-placeholder.png';
+    const imgAlt = 'this is a memory card so, no peaking';
+    const images = within(items[0]).getAllByRole('img');
+    expect(images[1]).toHaveAttribute('src', imgSrc);
+    expect(images[1]).toHaveAttribute('alt', imgAlt);
   });
 });

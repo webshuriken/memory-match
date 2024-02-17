@@ -23,12 +23,8 @@ export default function GameDash(): JSX.Element {
         <ButtonChip value='Reset' handleClick={resetDash} />
       </div>
       <section role="status">
-        <div>
-          <Moves />
-        </div>
-        <div>
-          <Timer />
-        </div>
+        <Moves />
+        <Timer />
       </section>
     </>
   );

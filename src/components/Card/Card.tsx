@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CardFaces } from "../../globals/types";
+import { CardFacesIntfc } from "../../globals/types";
 
 
 export interface Props {
@@ -8,7 +8,7 @@ export interface Props {
     src: string;
     alt: string;
   },
-  card: CardFaces,
+  card: CardFacesIntfc,
   handleClick: (a: State) => void;
 }
 
