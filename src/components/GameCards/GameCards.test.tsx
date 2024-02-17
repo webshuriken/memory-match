@@ -36,11 +36,19 @@ describe('Game Cards component', () => {
     expect(images).toHaveLength(2);
   });
 
-  test('one image has src = "cards-placeholder.png" with alt = "this is a memory card so, no peaking"', () => {
+  test('cover image has src = "cards-placeholder.png" with alt = "poker mixed with some old doodles"', () => {
+    const imgSrc = 'cards-placeholder.png';
+    const imgAlt = 'poker mixed with some old doodles';
+    const images = within(items[0]).getAllByRole('img');
+    expect(images[0]).toHaveAttribute('src', imgSrc);
+    expect(images[0]).toHaveAttribute('alt', imgAlt);
+  });
+
+  test('face image has src = "cards-placeholder.png" with alt = "this is a memory card so, no peaking"', () => {
     const imgSrc = 'cards-placeholder.png';
     const imgAlt = 'this is a memory card so, no peaking';
     const images = within(items[0]).getAllByRole('img');
-    expect(images[0]).toHaveAttribute('src', imgSrc);
+    expect(images[1]).toHaveAttribute('src', imgSrc);
     expect(images[1]).toHaveAttribute('alt', imgAlt);
   });
 });
