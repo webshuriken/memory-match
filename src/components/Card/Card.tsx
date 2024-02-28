@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CardFacesIntfc } from "../../globals/types";
+import { iCardFacesType } from "../../globals/types";
 
 
 export interface Props {
@@ -8,7 +8,7 @@ export interface Props {
     src: string;
     alt: string;
   },
-  card: CardFacesIntfc,
+  face: iCardFacesType,
   handleClick: (a: State) => void;
 }
 
@@ -19,7 +19,7 @@ interface State {
 
 export default function Card({
   cover, 
-  card: { src, id, flipped, pairID }, 
+  face: { src, id, flipped, pairID }, 
   alt,
   handleClick
 }: Props): JSX.Element {

@@ -9,7 +9,7 @@ const cardDetails:Props = {
     src: '#',
     alt: 'back of the card'
   },
-  card: {
+  face: {
     src: '#',
     flipped: false,
     id: 1
@@ -22,7 +22,7 @@ describe('Card component', () => {
     render(
       <Card 
         cover={cardDetails.cover} 
-        card={cardDetails.card} 
+        face={cardDetails.face} 
         alt={cardDetails.alt} 
         handleClick={cardDetails.handleClick}
       />
@@ -37,7 +37,7 @@ describe('Card component', () => {
       render(
         <Card 
           cover={cardDetails.cover} 
-          card={cardDetails.card} 
+          face={cardDetails.face} 
           alt={cardDetails.alt} 
           handleClick={cardDetails.handleClick} 
         />
