@@ -24,7 +24,8 @@ describe('Game Cards component', () => {
 
   // generic test, as the game currently only handles a deck of 8 cards
   test('list has 16 items', () => {
-    expect(items).toHaveLength(16);
+    const deckLength = DeckOfCards.cards.faces.length;
+    expect(items).toHaveLength(deckLength);
   });
   
   test('inside each items,there is element with role: button', () => {
