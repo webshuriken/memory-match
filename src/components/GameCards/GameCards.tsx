@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import Card from "../Card/Card";
 import { iCardsType, iCardFacesType } from '../../custom-types/types'
-import { useTimerDispatch, useTimerContext } from "../../context/TimerContext";
 
 
 type Props = {
   deckOfCards: iCardsType;
-  handleMatchFound: () => void;
+  handleCardClick: (matchFound: boolean, incrementMoves: boolean) => void;
 }
 
 type LastCardFlipType = {
@@ -14,10 +13,7 @@ type LastCardFlipType = {
   pairID: number| undefined;
 }
 
-export default function GameCards({ deckOfCards, handleMatchFound }: Props): JSX.Element {
-  // timer context
-  const {ticking} = useTimerContext();
-  const timerDispatch = useTimerDispatch();
+export default function GameCards({ deckOfCards, handleCardClick }: Props): JSX.Element {
   // component state
   const [lastCardFlip, setLastCardFlip] = useState<LastCardFlipType>({ id: undefined, pairID: undefined });
   const {alt, cover, faces} = deckOfCards;
@@ -27,8 +23,57 @@ export default function GameCards({ deckOfCards, handleMatchFound }: Props): JSX
    * @param {<{id: number, pairID: number}>} object - card values passed in
    */
   function handleClick({ id, pairID }: { id: number, pairID: number }): void {
-    // when clock is not ticking, is ready to go and user clicked a card, start timer
-    if (!ticking && timerDispatch !== null) { timerDispatch({ type: 'start' }); }
+    // we use it tell parent when we find a match and whether to increment moves counter
+    let matchFound = false;
+    let incrementMoves = false;
+    // is this a new card flip
+    if (lastCardFlip.id === undefined) {
+      const update: iCardFacesType[] = faces.map(face => {
+        if (face.id === id) {
+          return {
+            ...face, 
+            flipped: !face.flipped
+          };
+        }else{
+          return face;
+        }
+      });
+      // tracking the last card flipped
+      setLastCardFlip(prevState => prevState === null ? prevState : { id, pairID });
+    }else{
+      incrementMoves = true;
+      // use state and passed in fn() argument to check for match
+      if (id !== lastCardFlip.id && pairID === lastCardFlip.pairID) {
+        matchFound = true;
+      }
+
+      // create an update for the state depending on matchFound
+      const update: iCardFacesType[] = faces.map((face) => {
+        if (matchFound) {
+          // flip the switch on latest flip
+          if (face.id === id) {
+            return {
+              ...face,
+              flipped: !face.flipped
+            }
+          }
+          return face
+        }else{
+          // remove flipped switch from previous click
+          if (face.id === lastCardFlip.id) {
+            return {
+              ...face,
+              flipped: !face.flipped
+            }
+          }
+          return face
+        }
+      });
+      // reset local state
+      setLastCardFlip({ id: undefined, pairID: undefined });
+    }
+    // parent to deal with other updates
+    handleCardClick(matchFound, incrementMoves);
   }
   
   return (
