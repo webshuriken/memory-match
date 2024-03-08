@@ -3,7 +3,7 @@ import { Outlet, useOutletContext } from 'react-router-dom';
 import Nav from '../../components/Nav/Nav';
 import { DeckOfCards } from '../../globals/gameData';
 import { InitLeaderboard } from '../../globals/gameData';
-import { iGameContextType } from '../../globals/types';
+import { iGameContextType } from '../../custom-types/types';
 
 
 export default function App(): JSX.Element {
