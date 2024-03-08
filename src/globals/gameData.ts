@@ -1,4 +1,4 @@
-import { LeaderboardType, iDeckOfCardsType } from "./types"
+import { LeaderboardType, iDeckOfCardsType } from "../custom-types/types"
 import cardPlaceholderURL from './cards-placeholder.png';
 
 
