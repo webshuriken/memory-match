@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { iCardFacesType } from "../../globals/types";
+import { iCardFacesType } from "../../custom-types/types";
 
 
 export interface Props {
