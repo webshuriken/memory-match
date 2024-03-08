@@ -35,10 +35,14 @@ export type LeaderboardType = {
 }
 
 // Component: Timer
+// The mins/secs are kept as number because they are easier to implement
+// It is up to the ui to turn them into string if required
+// ticking property is so the ui knows that the timer is active
 export interface iTimerStateType {
   ticking: boolean;
   minutes: number;
   seconds: number;
+  toString: () => string
 }
 
 // Component: Moves
