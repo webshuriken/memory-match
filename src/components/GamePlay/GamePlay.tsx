@@ -36,21 +36,25 @@ export default function GamePlay({ setGameReady }: Props): JSX.Element {
     // when clock is not ticking, is ready to go and user clicked a card, start timer
     if (!ticking && timerDispatch !== null) { timerDispatch({ type: 'start' }); }
 
-
     // two flips counts as a move, on second flip increment moves counter
     if ( movesDispatch !== null && incrementMoves ) { movesDispatch({ type: 'add' }); }
+
+    // do we have a match
+    if (matchFound) { handleMatchFound() }
   }
 
   /**
    * Takes care when a matching pair is found
    */
-  function matchFound(): void {
-    if (deckOfCards?.faces.length === matchesFound) {
-      // inform Game component the game is no longer ready, as it finished
+  function handleMatchFound(): void {
+    if (deckOfCards?.faces.length === (matchesFound + 2)) {
+      console.log("ALL MATCHES FOUND, ENDING GAME")
+      // inform Game component the game has finished
       setGameReady(false)
     }else{
-      // we still have pairs to find, so increment count of matches found
-      setMatchesFound(prevState => prevState + 1);
+      console.log("FOUND A MATCH")
+      // increment by 2 because we are removing a pair of cards from play
+      setMatchesFound(prevState => prevState + 2);
     }
   }
 
