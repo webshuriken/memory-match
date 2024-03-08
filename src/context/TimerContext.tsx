@@ -1,4 +1,5 @@
 import { createContext, useReducer, Dispatch, useContext } from "react";
+import { iTimerStateType } from "../custom-types/types";
 
 
 type Props = {
@@ -11,23 +12,14 @@ export type TimerActionType = {
   type: 'tick' | 'pause' | 'start' | 'reset';
 }
 
-// The mins/secs are kept as number because they are easier to implement
-// It is up to the ui to turn them into string if required
-// ticking property is so the ui knows that the timer is active
-interface TimerStateInterface {
-  ticking: boolean;
-  minutes: number;
-  seconds: number;
-}
-
 // we need the initial values for the context
-const TimerInitValue: TimerStateInterface = {
+const TimerInitValue: iTimerStateType = {
   ticking: false,
   minutes: 0,
   seconds: 0
 }
 
-export const TimerContext = createContext<TimerStateInterface>(TimerInitValue);
+export const TimerContext = createContext<iTimerStateType>(TimerInitValue);
 export const TimerDispatchContext = createContext<Dispatch<TimerActionType> | null>(null);
 
 export function TimerProvider({ children }: Props): JSX.Element {
@@ -52,7 +44,7 @@ export function useTimerDispatch() {
   return useContext(TimerDispatchContext);
 }
 
-function TimerReducer(state: TimerStateInterface, action: TimerActionType) {
+function TimerReducer(state: iTimerStateType, action: TimerActionType) {
   let { minutes, seconds } = state;
 
   switch(action.type) {
