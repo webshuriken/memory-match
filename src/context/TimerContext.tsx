@@ -16,7 +16,12 @@ export type TimerActionType = {
 const TimerInitValue: iTimerStateType = {
   ticking: false,
   minutes: 0,
-  seconds: 0
+  seconds: 0,
+  timeToString: function() {
+    const m = this.minutes < 9 ? '0' + String(this.minutes) : this.minutes;
+    const s = this.seconds < 9 ? '0' + String(this.seconds) : this.seconds;
+    return `${m}:${s}`;
+  }
 }
 
 export const TimerContext = createContext<iTimerStateType>(TimerInitValue);
@@ -36,6 +41,7 @@ export function TimerProvider({ children }: Props): JSX.Element {
   );
 }
 
+// TODO: ISSUE FOUND HERE, THE OBJECT RETURNED DOES NOT CONTRAIN THE toString method!!! after dispatch
 export function useTimerContext() {
   return useContext(TimerContext);
 }
@@ -51,6 +57,7 @@ function TimerReducer(state: iTimerStateType, action: TimerActionType) {
     case 'tick':
       let timer = (seconds === 59) ? {minutes: minutes + 1, seconds: 0} : {minutes, seconds: seconds + 1};      
       return {
+        ...state,
         ticking: true,
         ...timer
       }
@@ -65,11 +72,7 @@ function TimerReducer(state: iTimerStateType, action: TimerActionType) {
         ticking: true
       }
     case 'reset':
-      return {
-        ticking: false,
-        minutes: 0,
-        seconds: 0
-      }
+      return TimerInitValue
     default:
       return state;
   }

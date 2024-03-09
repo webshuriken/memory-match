@@ -42,7 +42,7 @@ export interface iTimerStateType {
   ticking: boolean;
   minutes: number;
   seconds: number;
-  toString: () => string
+  timeToString: () => string
 }
 
 // Component: Moves
