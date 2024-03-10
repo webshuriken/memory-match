@@ -55,14 +55,15 @@ export type MovesActionType = {
 }
 
 // GAME SETTINGS
+export interface iPlayerGameStats {
+  moves: string;
+  name: string;
+  time: string;
+}
 export interface iGameContextType {
   game: {
     deckOfCards: iDeckOfCardsType;
-    player: {
-      moves: string;
-      name: string;
-      time: string;
-    }
+    player: iPlayerGameStats;
   }
   leaderboard: LeaderboardType[];
 }
