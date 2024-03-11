@@ -2,7 +2,8 @@ import { useState } from "react";
 // moves, timer context
 import { useMovesContext } from "../../context/MovesContext";
 import { useTimerContext } from "../../context/TimerContext";
-import { useOutletContext } from "react-router-dom";
+// this is the game context provided by me using react router
+import { useGameSetters } from "../../routes/App/App";
 // types
 import { iPlayerGameStats } from "../../custom-types/types";
 import { privateDecrypt } from "crypto";
@@ -35,7 +36,7 @@ export default function GameEnd(): JSX.Element {
   // lets get some context
   const gameMoves = useMovesContext();
   const gameTimer = useTimerContext();
-  const {updatePlayerStats}: any = useOutletContext(); // TODO: CONTEXT
+  const {updatePlayerStats}: any = useGameSetters(); // TODO: CONTEXT
 
   function handlePlayerName(e: React.ChangeEvent<HTMLInputElement>) {
     setPlayerName(e.target.value);
@@ -78,7 +79,7 @@ export default function GameEnd(): JSX.Element {
         moves: String(gameMoves),
         name: playerName
       }
-      // updatePlayerStats(playerStats);
+      updatePlayerStats(playerStats);
 
       // reset this components errors state before we move on
       setNameError(prevState => {
@@ -96,7 +97,7 @@ export default function GameEnd(): JSX.Element {
     }
   }
 
-  console.log("ERROR: ", nameError)
+  console.log("STAT: ", updatePlayerStats)
 
   return (
     <article>
