@@ -1,12 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // moves, timer context
 import { useMovesContext } from "../../context/MovesContext";
 import { useTimerContext } from "../../context/TimerContext";
-// this is the game context provided by me using react router
-import { useGameSetters } from "../../routes/App/App";
 // types
 import { iPlayerGameStats } from "../../custom-types/types";
-import { privateDecrypt } from "crypto";
 // modules still using require
 const BadWordsArray = require('badwords/array');
 const Filter = require('badwords-filter');
@@ -32,11 +30,12 @@ export default function GameEnd(): JSX.Element {
     short: { error: false, msg: ERROR_SHORT_MSG },
     profanity: { error: false, msg: ERROR_PROFANITY_MSG }
   });
+  // we will use navigation to move to the leaderboard page and pass in some props
+  const navigate = useNavigate();
 
   // lets get some context
   const gameMoves = useMovesContext();
   const gameTimer = useTimerContext();
-  const {updatePlayerStats}: any = useGameSetters(); // TODO: CONTEXT
 
   function handlePlayerName(e: React.ChangeEvent<HTMLInputElement>) {
     setPlayerName(e.target.value);
@@ -79,7 +78,6 @@ export default function GameEnd(): JSX.Element {
         moves: String(gameMoves),
         name: playerName
       }
-      updatePlayerStats(playerStats);
 
       // reset this components errors state before we move on
       setNameError(prevState => {
@@ -94,10 +92,11 @@ export default function GameEnd(): JSX.Element {
           }
         };
       });
+
+      // lets move on to the leaderboard page
+      navigate("/leaderboard", { state: playerStats });
     }
   }
-
-  console.log("STAT: ", updatePlayerStats)
 
   return (
     <article>
