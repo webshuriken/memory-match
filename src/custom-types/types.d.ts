@@ -1,4 +1,4 @@
-// INTERFACES
+// DECK OF CARDS TYPES
 export interface iCardFacesType {
   src: string;
   id?: number;
@@ -25,18 +25,9 @@ export interface iDeckOfCardsType {
   theme: string;
 }
 
-// TYPES
-export type LeaderboardType = {
-  id: string;
-  name: string;
-  time: string;
-  moves: number;
-  position: number;
-}
-
 // Component: Timer
 // The mins/secs are kept as number because they are easier to implement
-// It is up to the ui to turn them into string if required
+// builtin function to turn timer numbers into string
 // ticking property is so the ui knows that the timer is active
 export interface iTimerStateType {
   ticking: boolean;
@@ -54,24 +45,29 @@ export type MovesActionType = {
   type: 'add' | 'reset';
 }
 
+// LEADERBOARD TYPES
+export type LeaderboardType = {
+  id: string;
+  name: string;
+  time: string;
+  moves: number;
+  position: number;
+}
+
 // GAME SETTINGS
+export interface iGameSettingsType {
+  deckOfCards: iDeckOfCardsType;
+}
+
+// player stats
 export interface iPlayerGameStats {
   moves: string;
   name: string;
   time: string;
 }
-export interface iGameSettingsType {
-  game: {
-    deckOfCards: iDeckOfCardsType;
-    player: iPlayerGameStats;
-  }
-  leaderboard: LeaderboardType[];
-}
 
-// GAME CONTEXT used with react router
-interface iGameContextSetters {
-  updatePlayerStats: (stats: iPlayerGameStats) => iGameContextType;
-}
+// GAME CONTEXT use with react router
 export interface iGameContextType extends iGameSettingsType {
-  gameSetters: iGameContextSetters;
+  theGame: iGameSettingsType;
+  theLeaderboard: LeaderboardType[];
 }
