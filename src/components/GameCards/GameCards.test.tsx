@@ -2,13 +2,14 @@ import {render, screen, within} from '@testing-library/react';
 import GameCards from './GameCards';
 import { DeckOfCards } from '../../globals/gameData';
 
+const gameInProgress = false;
 
 describe('Game Cards component', () => {
   let list: HTMLElement;
   let items: HTMLElement[];
 
   beforeEach(() => {
-    render(<GameCards cards={DeckOfCards.cards} handleMatchFound={jest.fn} />);
+    render(<GameCards deckOfCards={DeckOfCards.cards} handleCardClick={jest.fn} />);
     list = screen.getByRole('list');
     items = within(list).getAllByRole('listitem');
   });
@@ -23,7 +24,8 @@ describe('Game Cards component', () => {
 
   // generic test, as the game currently only handles a deck of 8 cards
   test('list has 16 items', () => {
-    expect(items).toHaveLength(16);
+    const deckLength = DeckOfCards.cards.faces.length;
+    expect(items).toHaveLength(deckLength);
   });
   
   test('inside each items,there is element with role: button', () => {

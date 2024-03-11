@@ -1,84 +1,101 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import InputText from "../InputText/InputText";
-import ButtonChip from "../ButtonChip/ButtonChip";
-import ErrorMessage from "./ErrorMessage";
 // moves, timer context
 import { useMovesContext } from "../../context/MovesContext";
 import { useTimerContext } from "../../context/TimerContext";
+// types
+import { iPlayerGameStats } from "../../custom-types/types";
 // modules still using require
 const BadWordsArray = require('badwords/array');
 const Filter = require('badwords-filter');
 
 
-interface PlayerName {
-  name: string;
-  isProfanity: boolean;
-  isTooShort: boolean;
+type ErrorNameBodyType = {
+  error: boolean;
+  msg: string;
+}
+type NameErrorType = {
+  short: ErrorNameBodyType;
+  profanity: ErrorNameBodyType;
 }
 
-interface PlayerStats {
-  name: string;
-  time: {
-    mins: number;
-    secs: number;
-  },
-  moves: number;
-}
+// message for the user when they do what of the two errors
+const ERROR_SHORT_MSG = 'Your name has to be between 4 and 20 characters';
+const ERROR_PROFANITY_MSG = 'What did we say about bad words..';
 
 export default function GameEnd(): JSX.Element {
-  const [player, setPlayer] = useState<PlayerName>({
-    name: '',
-    isProfanity: false,
-    isTooShort: false
+  // lets control this Form component
+  const [playerName, setPlayerName] = useState('');
+  const [nameError, setNameError] = useState<NameErrorType>({
+    short: { error: false, msg: ERROR_SHORT_MSG },
+    profanity: { error: false, msg: ERROR_PROFANITY_MSG }
   });
-  // this is so we can manually navigate to the desired page
+  // we will use navigation to move to the leaderboard page and pass in some props
   const navigate = useNavigate();
-  // context
-  const moves = useMovesContext();
-  const { ticking, minutes, seconds } = useTimerContext();
 
-  /**
-   * Simply updates the this components state with user text
-   * @param {string} name - the text entered by the user
-   */
-  function handlePlayerName(name: string): void {
-    setPlayer(prevState => ({ ...prevState, name: name }));
+  // lets get some context
+  const gameMoves = useMovesContext();
+  const gameTimer = useTimerContext();
+
+  function handlePlayerName(e: React.ChangeEvent<HTMLInputElement>) {
+    setPlayerName(e.target.value);
   }
 
-  /**
-   * Checks the text entered by user and presents error messages
-   * @returns undefined - used to exit early
-   */
-  function handleClick(event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>): void {
-    // in case someone tries to enter an empty string
-    if (player.name.length === 0) return;
-
-    // create filter of badwords
-    const filter = new Filter({ list: BadWordsArray, useRegex: true });
-    // check minimum length and if there are any profanities
-    const tooShort = player.name.length < 4 ? true : false;
-    const profanity = filter.isUnclean(player.name);
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    let tooShort = false;
+    let hasProfanity = false;
     
-    // update state if checks are not met, this is so we rerender page or lets moves on to leaderboard
-    if (tooShort || profanity) {
-      // update the state with results
-      setPlayer(prevState => ({ ...prevState, isProfanity: profanity, isTooShort: tooShort }));
-    }else{
-      prepPlayerStats();
+    // is the word long enough
+    if (playerName.length < 4) {
+      tooShort = true;
     }
-  }
+    
+    // create our bad words filter, make sure to use regex option so we can catch sneaky people
+    const filter = new Filter({ list: BadWordsArray, useRegex: true });
+    if (filter.isUnclean(playerName)) {
+      hasProfanity = true;
+    }
 
-  function prepPlayerStats(): void {
-    const latestPlayerStats: PlayerStats = {
-      name: player.name,
-      time: {
-        mins: minutes,
-        secs: seconds
-      },
-      moves: moves
+    // updating the state when there is an error so we can msg the user about the mistake
+    if (hasProfanity || tooShort) {
+        setNameError(prevState => {
+          return {
+            profanity: {
+              ...prevState.profanity,
+              error: hasProfanity
+            },
+            short: {
+              ...prevState.short,
+              error: tooShort
+            }
+          };
+        });
+    }else{
+      // prep the stats from the current game to update theGame state
+      const playerStats: iPlayerGameStats = {
+        time: gameTimer.timeToString(),
+        moves: String(gameMoves),
+        name: playerName
+      }
+
+      // reset this components errors state before we move on
+      setNameError(prevState => {
+        return {
+          profanity: {
+            ...prevState.profanity,
+            error: false
+          },
+          short: {
+            ...prevState.short,
+            error: false
+          }
+        };
+      });
+
+      // lets move on to the leaderboard page
+      navigate("/leaderboard", { state: playerStats });
     }
-    console.log("HERE IS THE GAME STATS: ", latestPlayerStats)
   }
 
   return (
@@ -87,9 +104,29 @@ export default function GameEnd(): JSX.Element {
         <h2>Congratulations</h2>
       </header>
       <div>
-        <InputText handlePlayerName={handlePlayerName} />
-        <ErrorMessage isProfanity={player.isProfanity} isTooShort={player.isTooShort} />
-        <ButtonChip handleClick={handleClick} value='Continue' />
+        <form onSubmit={handleSubmit}>
+          <p>
+            <label>
+              <span>enter your name</span>
+              <input 
+                placeholder="max 20 characters" 
+                type="text" 
+                name="player_name" 
+                maxLength={20}
+                onChange={handlePlayerName}
+              />
+              {
+                nameError.profanity.error ? <span>{nameError.profanity.msg}</span> : <></>
+              }
+              {
+                nameError.short.error ? <span>{nameError.short.msg}</span> : <></>
+              }
+            </label>
+          </p>
+          <p>
+            <button type="submit">Continue</button>
+          </p>
+        </form>
       </div>
     </article>
   )

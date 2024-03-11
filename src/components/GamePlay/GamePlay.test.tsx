@@ -1,9 +1,10 @@
 import { screen, render, within } from "@testing-library/react";
 import GamePlay from "./GamePlay";
-import { CardsIntfc } from "../../globals/types";
+import { iCardsType } from "../../custom-types/types";
+import { DeckOfCards } from "../../globals/gameData";
 
 
-const cards: CardsIntfc = {
+const cards: iCardsType = {
   alt: 'no peaking',
   faces: [{
     src: '#'
@@ -16,7 +17,7 @@ const cards: CardsIntfc = {
 
 describe('GamePlay component', () => {
   beforeEach(() => {
-    render(<GamePlay cards={cards} setGameReady={jest.fn} />);
+    render(<GamePlay setGameReady={jest.fn} />);
   });
 
   test('game component renders', () => {
@@ -35,9 +36,10 @@ describe('GamePlay component', () => {
   test('the gamecard renders', () => {
     const list = screen.getByRole('list');
     const listitem = within(list).getAllByRole('listitem');
+    const metaDeckLength = DeckOfCards.cards.faces.length * 2;
     expect(list).toBeInTheDocument();
     expect(listitem[0]).toBeInTheDocument();
-    expect(listitem).toHaveLength(2);
+    expect(listitem).toHaveLength(metaDeckLength);
     expect(within(listitem[0]).getByRole('button'));
   });
 });

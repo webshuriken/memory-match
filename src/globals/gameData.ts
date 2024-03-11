@@ -1,4 +1,4 @@
-import { LeaderboardType, DeckOfCardsIntfc } from "./types"
+import { LeaderboardType, iDeckOfCardsType } from "../custom-types/types"
 import cardPlaceholderURL from './cards-placeholder.png';
 
 
@@ -13,13 +13,13 @@ export const CloudinaryCardsList: { faces: string[]; cover: string } = {
     'cards-swirl_lady_gagxsr.png',
     'cards-spiral_eye_ueslyj.png',
     'cards-red_hair_f2hosm.png',
-    'cards-yuki_greig0'
+    'cards-yuki_greig0.png'
   ],
   cover: 'cards-cover_tusv76.png'
 }
 
 // exposes a deck of cards
-export const DeckOfCards: DeckOfCardsIntfc = {
+export const DeckOfCards: iDeckOfCardsType = {
   author: {
     name: [
       'Amy L Sutton',
