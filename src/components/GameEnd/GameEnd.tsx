@@ -2,25 +2,40 @@ import { useState } from "react";
 // moves, timer context
 import { useMovesContext } from "../../context/MovesContext";
 import { useTimerContext } from "../../context/TimerContext";
+import { useOutletContext } from "react-router-dom";
+// types
+import { iPlayerGameStats } from "../../custom-types/types";
+import { privateDecrypt } from "crypto";
 // modules still using require
 const BadWordsArray = require('badwords/array');
 const Filter = require('badwords-filter');
 
 
-type NameError = {
-  short?: string;
-  profanity?: string;
-  continue: boolean;
+type ErrorNameBodyType = {
+  error: boolean;
+  msg: string;
 }
+type NameErrorType = {
+  short: ErrorNameBodyType;
+  profanity: ErrorNameBodyType;
+}
+
+// message for the user when they do what of the two errors
+const ERROR_SHORT_MSG = 'Your name has to be between 4 and 20 characters';
+const ERROR_PROFANITY_MSG = 'What did we say about bad words..';
 
 export default function GameEnd(): JSX.Element {
   // lets control this Form component
   const [playerName, setPlayerName] = useState('');
-  const [nameError, setNameError] = useState<NameError>({ continue: false })
+  const [nameError, setNameError] = useState<NameErrorType>({
+    short: { error: false, msg: ERROR_SHORT_MSG },
+    profanity: { error: false, msg: ERROR_PROFANITY_MSG }
+  });
 
   // lets get some context
   const gameMoves = useMovesContext();
   const gameTimer = useTimerContext();
+  const {updatePlayerStats}: any = useOutletContext(); // TODO: CONTEXT
 
   function handlePlayerName(e: React.ChangeEvent<HTMLInputElement>) {
     setPlayerName(e.target.value);
@@ -28,28 +43,60 @@ export default function GameEnd(): JSX.Element {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const error: NameError = { continue: false };
+    let tooShort = false;
+    let hasProfanity = false;
     
     // is the word long enough
     if (playerName.length < 4) {
-      error.short = 'Your name has to be between 4 and 20 characters';
+      tooShort = true;
     }
     
-    // create bad words filter
+    // create our bad words filter, make sure to use regex option so we can catch sneaky people
     const filter = new Filter({ list: BadWordsArray, useRegex: true });
     if (filter.isUnclean(playerName)) {
-      error.profanity = 'What did we say about bad words..';
+      hasProfanity = true;
     }
 
-    if (Object.keys(error).length > 0) {
-      setNameError(error);
+    // updating the state when there is an error so we can msg the user about the mistake
+    if (hasProfanity || tooShort) {
+        setNameError(prevState => {
+          return {
+            profanity: {
+              ...prevState.profanity,
+              error: hasProfanity
+            },
+            short: {
+              ...prevState.short,
+              error: tooShort
+            }
+          };
+        });
+    }else{
+      // prep the stats from the current game to update theGame state
+      const playerStats: iPlayerGameStats = {
+        time: gameTimer.timeToString(),
+        moves: String(gameMoves),
+        name: playerName
+      }
+      // updatePlayerStats(playerStats);
+
+      // reset this components errors state before we move on
+      setNameError(prevState => {
+        return {
+          profanity: {
+            ...prevState.profanity,
+            error: false
+          },
+          short: {
+            ...prevState.short,
+            error: false
+          }
+        };
+      });
     }
-
-    // if we made it thus far then we good
-    error.continue = true;
-
-    // TODO: PREPP THE DATA FOR THE LEADERBOARD
   }
+
+  console.log("ERROR: ", nameError)
 
   return (
     <article>
@@ -69,14 +116,10 @@ export default function GameEnd(): JSX.Element {
                 onChange={handlePlayerName}
               />
               {
-                !nameError.continue 
-                ?
-                  <></>
-                :
-                  <span>
-                    <span>{nameError.short}</span>
-                    <span>{nameError.profanity}</span>
-                  </span>
+                nameError.profanity.error ? <span>{nameError.profanity.msg}</span> : <></>
+              }
+              {
+                nameError.short.error ? <span>{nameError.short.msg}</span> : <></>
               }
             </label>
           </p>
