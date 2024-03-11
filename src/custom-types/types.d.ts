@@ -60,10 +60,18 @@ export interface iPlayerGameStats {
   name: string;
   time: string;
 }
-export interface iGameContextType {
+export interface iGameSettingsType {
   game: {
     deckOfCards: iDeckOfCardsType;
     player: iPlayerGameStats;
   }
   leaderboard: LeaderboardType[];
+}
+
+// GAME CONTEXT used with react router
+interface iGameContextSetters {
+  updatePlayerStats: (stats: iPlayerGameStats) => iGameContextType;
+}
+export interface iGameContextType extends iGameSettingsType {
+  gameSetters: iGameContextSetters;
 }
