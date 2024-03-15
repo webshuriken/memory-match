@@ -28,7 +28,7 @@ export default function App(): JSX.Element {
   );
 }
 
-// active game deck and player stats
+// Game settings context
 export function useGame() {
   const gameContext = useOutletContext<iGameContextType>();
   return gameContext.theGame;
