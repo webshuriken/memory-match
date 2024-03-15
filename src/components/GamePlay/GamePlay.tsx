@@ -8,6 +8,7 @@ import { useTimerDispatch, useTimerContext } from "../../context/TimerContext";
 import { useMovesDispatch } from "../../context/MovesContext";
 
 
+// parent passing in function to update their own state
 type Props = {
   setGameReady: (value: boolean) => void;
 }
