@@ -2,8 +2,8 @@ import ButtonChip from "../ButtonChip/ButtonChip"
 
 
 type Props = {
-  title: string;
-  msg: string;
+  title?: string;
+  msg?: string;
 }
 
 // About and Leaderboard pages have similar headers, all that changes is the title and message they display.
