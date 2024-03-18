@@ -1,11 +1,13 @@
-import { LeaderboardType } from "../../custom-types/types";
 import { useLeaderboard } from "../../routes/App/App";
 
 
-// TODO: CREATE THE TYPE FOR THE PROP BUT I THINK WE CAN USE THE Leaderboard type..
-// TODO: THIS NEEDS TO TAKE IN A TABLE SO WE CAN DISPLAY
 export default function LeaderboardTable(): JSX.Element {
   const leaderboard = useLeaderboard();
+
+  // organise in ASC order
+  if (leaderboard !== undefined) {
+    leaderboard.sort((a,b) => a.position - b.position);
+  }
 
   return (
     <table>
@@ -21,7 +23,7 @@ export default function LeaderboardTable(): JSX.Element {
       { 
         (leaderboard !== undefined)
         ?
-          leaderboard.map(data => {
+        leaderboard.map(data => {
             return (
               <tr key={data.id}>
                 <td>{data.name}</td>
@@ -32,7 +34,7 @@ export default function LeaderboardTable(): JSX.Element {
             )
           })
         :
-          <tr><td>Loading leaderboard</td></tr>
+          <tr><td colSpan={5}>Loading leaderboard</td></tr>
         }
       </tbody>
     </table>
