@@ -34,20 +34,6 @@ export const DeckOfCards: iDeckOfCardsType = {
     alt: 'this is a memory card so, no peaking',
     faces: [{
       src: cardPlaceholderURL
-    },{
-      src: cardPlaceholderURL
-    },{
-      src: cardPlaceholderURL
-    },{
-      src: cardPlaceholderURL
-    },{
-      src: cardPlaceholderURL
-    },{
-      src: cardPlaceholderURL
-    },{
-      src: cardPlaceholderURL
-    },{
-      src: cardPlaceholderURL
     }],
     cover: {
       alt: 'poker mixed with some old doodles',
@@ -59,34 +45,40 @@ export const DeckOfCards: iDeckOfCardsType = {
 }
 
 // exposes game data until we setup a proper backend
-export const InitLeaderboard: LeaderboardType[] = [{
-  id: 'r33r',
-  name: 'Pretender',
-  time: '02:44',
-  moves: 28,
-  position: 1,
-},{
-  id: 'sc24x',
-  name: 'Cerebellum',
-  time: '01:28',
-  moves: 26,
-  position: 3,
-},{
-  id: 'dfs2',
-  name: 'Lindsey',
-  time: '00:55',
-  moves: 22,
-  position: 5,
-},{
-  id: 'gf2s',
-  name: 'Pineapple',
-  time: '01:11',
-  moves: 0,
-  position: 2,
-},{
-  id: 'jhg56',
-  name: '',
-  time: '03:33',
-  moves: 0,
-  position: 4,
-},];
+export const InitLeaderboard: LeaderboardType[] = [
+  {
+    id: 'dfs2',
+    name: 'Lindsey',
+    time: '00:55',
+    moves: 22,
+    position: 1,
+  },
+  {
+    id: 'gf2s',
+    name: 'Pineapple',
+    time: '01:11',
+    moves: 21,
+    position: 2,
+  },
+  {
+    id: 'sc24x',
+    name: 'Cerebellum',
+    time: '01:28',
+    moves: 26,
+    position: 3,
+  },
+  {
+    id: 'r33r',
+    name: 'Pretender',
+    time: '01:44',
+    moves: 28,
+    position: 4,
+  },
+  {
+    id: 'jhg56',
+    name: 'Suavemente',
+    time: '02:33',
+    moves: 44,
+    position: 5,
+  }
+];
