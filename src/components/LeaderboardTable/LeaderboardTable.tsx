@@ -2,7 +2,7 @@ import { useLeaderboard } from "../../routes/App/App";
 
 
 export default function LeaderboardTable(): JSX.Element {
-  const leaderboard = useLeaderboard();
+  const [leaderboard] = useLeaderboard();
 
   // organise in ASC order
   if (leaderboard !== undefined) {
