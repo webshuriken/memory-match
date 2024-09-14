@@ -91,7 +91,10 @@ export interface iGameSettingsType {
 
 // GAME CONTEXT use with react router
 // It implements theGame settings and theLeaderboard
-export interface iGameContextType extends iGameSettingsType {
+export interface iGameContextType {
   theGame: iGameSettingsType;
-  theLeaderboard: LeaderboardType[];
+  leaderboard: [
+    theLeaderboard: LeaderboardType[],
+    setTheLeaderboard: (state) => LeaderboardType[],
+  ];
 }
