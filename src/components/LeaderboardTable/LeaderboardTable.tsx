@@ -1,13 +1,13 @@
 import { useLeaderboard } from "../../routes/App/App";
+import { LeaderboardType, LastGameStatsType } from "../../custom-types/types";
 
 
-export default function LeaderboardTable(): JSX.Element {
+type Props = {
+  lastGameStats: LastGameStatsType | null;
+}
+
+export default function LeaderboardTable({ lastGameStats }: Props): JSX.Element {
   const [leaderboard] = useLeaderboard();
-
-  // organise in ASC order
-  if (leaderboard !== undefined) {
-    leaderboard.sort((a,b) => a.position - b.position);
-  }
 
   return (
     <table>
@@ -25,7 +25,7 @@ export default function LeaderboardTable(): JSX.Element {
         ?
         leaderboard.map(data => {
             return (
-              <tr key={data.id}>
+              <tr key={data.id} className={data.id === lastGameStats?.playerStats.id ? "last-game-stats__row" : "leaderboard-stats__row"}>
                 <td>{data.name}</td>
                 <td>{data.moves}</td>
                 <td>{data.time}</td>
