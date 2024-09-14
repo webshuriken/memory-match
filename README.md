@@ -11,6 +11,11 @@ A list of things to tackle that are not features but possible issues:
   - Tried copying the code form the docs which says TS and still get error
   - Had to give it a type of any _not so nice hack_ to get it to work
 
+- Leaderboard.tsx implements the leaderboard table update assuming that
+the list is given in ascending order according to the players position.
+If the list is given in random order then it can cause trouble with the position
+of players.
+
 ## Thoughts
 
 The project was an excellent opportunity to practice my Typescript. To tell the truth, slow start and strong finish. I am loving the idea of typing in JS, specially the ability to create custom types. Dwelling on the past is no use when you want to evolve. I do want to point out, that adding types to a project definately needs planning and takes time!, still fun.
