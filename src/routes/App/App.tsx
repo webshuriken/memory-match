@@ -6,8 +6,8 @@ import { iGameSettingsType, iGameContextType, LeaderboardType } from '../../cust
 
 
 export default function App(): JSX.Element {
-  const [theGame, setTheGame] = useState<iGameSettingsType | undefined>(undefined);
-  const [theLeaderboard, setTheLeaderboard] = useState<LeaderboardType[] | undefined>(undefined);
+  const [theGame, setTheGame] = useState<iGameSettingsType>();
+  const [theLeaderboard, setTheLeaderboard] = useState<LeaderboardType[]>();
 
   useEffect(() => {
     // prep the game
@@ -22,7 +22,7 @@ export default function App(): JSX.Element {
         <Nav />
       </header>
       <main>
-        <Outlet context={{ theGame, theLeaderboard }} />
+        <Outlet context={{ theGame, leaderboard: [theLeaderboard, setTheLeaderboard] }} />
       </main>
     </div>
   );
@@ -37,5 +37,5 @@ export function useGame() {
 // Leaderboard context
 export function useLeaderboard() {
   const gameContext = useOutletContext<iGameContextType>();
-  return gameContext.theLeaderboard;
+  return gameContext.leaderboard;
 }
