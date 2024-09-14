@@ -2,71 +2,110 @@ import { useLeaderboard } from "../App/App";
 import { useLocation } from "react-router-dom";
 import PageHeader from "../../components/PageHeader/PageHeader"
 import LeaderboardTable from "../../components/LeaderboardTable/LeaderboardTable";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { LeaderboardType } from "../../custom-types/types";
 // npm packages
 import ShortUniqueId from 'short-unique-id';
 
+type LastGameStatsType = {
+  playerStats: LeaderboardType;
+  inLeaderboard: boolean;
+}
 
 export default function Leaderboard(): JSX.Element {
-  // TODO 1: Need to load up the leaderboard as it is.
-  const leaderboard = useLeaderboard();
+  const [leaderboard, setLeaderboard] = useLeaderboard();
   const location = useLocation();
-
   // TODO: the project says that it is TS compatible but TS is type throwing errors
   const uuid: any = new ShortUniqueId();
 
-  console.log("LEADERBOARD/: ", leaderboard)
-
+  const [lastGameStats, setLastGameStats] = useState<LastGameStatsType | null>(null);
   
-  // TODO 2: Check if we have a incoming results
-  if (location.state) {
-    // extra only properties we need
-    const { time, moves } = location.state;
-    // calculate current player score
-    const latestScore = Number(time.substring(0,2) + time.substring(3)) + Number(moves);
-    // calculate scores for current leaderboard
-    
-    // lets add the new score and also trim the list to a max of 12
-    let updatedLeaderboard: LeaderboardType[] = [];
-    // search switch
-    let addingLatestScore = true;
-    let position = 0;
-    leaderboard.forEach(player => {
-      let score = Number(player.time.substring(0,2) + player.time.substring(3)) + Number(player.moves);
-      // here we separate the loosers from the winners
-      if (addingLatestScore && score >= latestScore) {
-        updatedLeaderboard.push({
-          ...location.state,
-          id: uuid.rnd(),
-          position: position + 1,
-        });
-        addingLatestScore = false;
-      }
-      updatedLeaderboard.push({
-        ...player,
-        position: position + 1,
-      });
-    });
-    console.log(`LATEST SCORE: ${latestScore}`);
-    console.log("UPDATED SCORES: ", updatedLeaderboard)
-  }
   // 2. Add results to current leaderboard..
   //    2.1 if was not enough to be in leaderboard place at the very end.. style to show out of bounds
   //    2.2 if good, add to leaderboard but highlight the result so it stands out, making it easily visible
   //    2.2.1 in the background send an update to DATABASE with updated leaderboard
   useEffect(() => {
-    console.log("USE EFFECT IN ACTION?")
-    // TODO: IN HERE WE CHECK location for any state pass in and update the leaderboard accodingly
-    // This will be the quick implementation for local storage.
-    // I need to see how i can implement MondoDB with this
+    if (location.state && leaderboard != null) {
+      // extract last game stats
+      const { time, moves, name } = location.state;
+      
+      // store so we can show player their last game stats
+      // even if they dont make the leaderboard
+      const latestPlayerStats: LeaderboardType = {
+        id: uuid.rnd(),
+        name,
+        time,
+        moves,
+        position: 0,
+      }
+      
+      // calculate current player score
+      const latestScore = Number(time.substring(0,2) + time.substring(3)) + Number(moves);
+      
+      // lets add the new score and also trim the list to a max of 100
+      let updatedLeaderboard: LeaderboardType[] = [];
+      // search switch
+      let addingLatestScore = true;
+      // dynamically tracks the players position on the leaderboard
+      let position = 1;
+
+      // lets try to add latest player to current leaderboard
+      leaderboard.forEach(player => {
+        let score = Number(player.time.substring(0,2) + player.time.substring(3)) + Number(player.moves);
+        // here we separate the loosers from the winners
+        if (addingLatestScore && score >= latestScore) {
+          latestPlayerStats.position = position++;
+          updatedLeaderboard.push(latestPlayerStats);
+          addingLatestScore = false;
+        }
+        updatedLeaderboard.push({
+          ...player,
+          position: position++,
+        });
+      });
+  
+      // are we still looking to add latest player stats to leaderboard?
+      // and does the leaderboard still have room for another?
+      if (addingLatestScore && updatedLeaderboard.length < 50) {
+        // add to last place
+        latestPlayerStats.position = updatedLeaderboard.length + 1;
+        updatedLeaderboard.push(latestPlayerStats);
+        addingLatestScore = false;
+      }
+  
+      // lets make sure the updated leaderboard only has 100 items
+      if (updatedLeaderboard.length > 50) {
+        updatedLeaderboard = updatedLeaderboard.slice(0,50);
+      }
+  
+      setLastGameStats(() => {
+        return {
+          playerStats: latestPlayerStats,
+          inLeaderboard: latestPlayerStats.position <= 50,
+        }
+      })
+      // update game context
+      setLeaderboard(() => updatedLeaderboard);
+    }
   }, []);
 
+  // TODO:
+  // - pass is the last game stats to show
+  // - change the message to suit the last results:
+  // MSG: weldone!, you made it into the leaderboard
+  // MSG: well played, unfortunately you didnt make it into the leaderboard
+  const msgs = {
+    good: "weldone! you made it into the leaderboard",
+    bad: "well played, unfortunately you didnt make it into the leaderboard",
+    default: "We only store the last 50 game entries. Can you find yours??"
+  }
+
+  console.log("PLAYER STATS: ", lastGameStats)
   return (
     <article>
       <PageHeader 
         title="Leaderboard" 
-        msg="Your place is based on the number of moves and time taken to complete."
+        msg={lastGameStats == null ? msgs.default : lastGameStats.inLeaderboard ? msgs.good : msgs.bad }
       />
       <LeaderboardTable />
     </article>
