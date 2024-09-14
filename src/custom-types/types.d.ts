@@ -81,6 +81,11 @@ export type LeaderboardType = {
   position: number;
 }
 
+export type LastGameStatsType = {
+  playerStats: LeaderboardType;
+  inLeaderboard: boolean;
+}
+
 /* --|| GAME SETTINGS ||-- */
 
 // the type for the settings available in the game
