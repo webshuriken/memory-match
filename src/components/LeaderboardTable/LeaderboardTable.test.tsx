@@ -3,7 +3,12 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import LeaderboardTable from "./LeaderboardTable";
 import Leaderboard from "../../routes/Leaderboard/Leaderboard";
 import App from "../../routes/App/App";
+import { LastGameStatsType } from "../../custom-types/types";
 
+
+type Props = {
+  lastGameStats: LastGameStatsType | null;
+}
 
 /** TODO: WRITE THESE TESTS BEFORE GOING TO WORK!! 
  * TESSSSSST FOR:
@@ -19,7 +24,18 @@ import App from "../../routes/App/App";
   position: 1,
 }
  */
+
 describe('LeaderboardTable component', () => {
+  const lastGameStats: LastGameStatsType = {
+    playerStats: {
+      id: 'bbR4fg',
+      name: 'Barbara',
+      time: '02:44',
+      moves: 28,
+      position: 10,
+    },
+    inLeaderboard: true
+  }
   /**
    * Wrapping the component, the one we are testing, within the react router components
    * using the App component as the parent seem to be the only way I could get the 
@@ -30,7 +46,7 @@ describe('LeaderboardTable component', () => {
       <MemoryRouter initialEntries={['/leaderboardTable']}>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route path="/leaderboardTable" element={<LeaderboardTable />} />
+            <Route path="/leaderboardTable" element={<LeaderboardTable lastGameStats={lastGameStats} />} />
           </Route>
         </Routes>
       </MemoryRouter>
