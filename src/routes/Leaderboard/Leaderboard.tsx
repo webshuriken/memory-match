@@ -3,27 +3,19 @@ import { useLocation } from "react-router-dom";
 import PageHeader from "../../components/PageHeader/PageHeader"
 import LeaderboardTable from "../../components/LeaderboardTable/LeaderboardTable";
 import { useEffect, useState } from "react";
-import { LeaderboardType } from "../../custom-types/types";
+import { LeaderboardType, LastGameStatsType } from "../../custom-types/types";
 // npm packages
 import ShortUniqueId from 'short-unique-id';
 
-type LastGameStatsType = {
-  playerStats: LeaderboardType;
-  inLeaderboard: boolean;
-}
 
 export default function Leaderboard(): JSX.Element {
   const [leaderboard, setLeaderboard] = useLeaderboard();
   const location = useLocation();
   // TODO: the project says that it is TS compatible but TS is type throwing errors
   const uuid: any = new ShortUniqueId();
-
+  // remember the last game stats, used locally and by LeaderboardTable
   const [lastGameStats, setLastGameStats] = useState<LastGameStatsType | null>(null);
   
-  // 2. Add results to current leaderboard..
-  //    2.1 if was not enough to be in leaderboard place at the very end.. style to show out of bounds
-  //    2.2 if good, add to leaderboard but highlight the result so it stands out, making it easily visible
-  //    2.2.1 in the background send an update to DATABASE with updated leaderboard
   useEffect(() => {
     if (location.state && leaderboard != null) {
       // extract last game stats
@@ -100,14 +92,26 @@ export default function Leaderboard(): JSX.Element {
     default: "We only store the last 50 game entries. Can you find yours??"
   }
 
-  console.log("PLAYER STATS: ", lastGameStats)
   return (
     <article>
       <PageHeader 
         title="Leaderboard" 
         msg={lastGameStats == null ? msgs.default : lastGameStats.inLeaderboard ? msgs.good : msgs.bad }
       />
-      <LeaderboardTable />
+      <LeaderboardTable lastGameStats={lastGameStats} />
+      {
+        lastGameStats?.inLeaderboard ? <span></span> : (
+          <table className="looser-table">
+            <tbody>
+              <tr>
+                <td>{lastGameStats?.playerStats.name}</td>
+                <td>{lastGameStats?.playerStats.moves}</td>
+                <td>{lastGameStats?.playerStats.time}</td>
+              </tr>
+            </tbody>
+          </table>
+        )
+      }
     </article>
   )
 }
