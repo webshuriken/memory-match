@@ -81,11 +81,6 @@ export default function Leaderboard(): JSX.Element {
     }
   }, []);
 
-  // TODO:
-  // - pass is the last game stats to show
-  // - change the message to suit the last results:
-  // MSG: weldone!, you made it into the leaderboard
-  // MSG: well played, unfortunately you didnt make it into the leaderboard
   const msgs = {
     good: "weldone! you made it into the leaderboard",
     bad: "well played, unfortunately you didnt make it into the leaderboard",
