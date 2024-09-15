@@ -45,10 +45,3 @@ describe('About component tests', () => {
     expect(link).toBeInTheDocument();
   });
 });
-
-// test('renders the Exit button', () => {
-//   render(<About />);
-//   const button = screen.getByRole('button');
-//   expect(button).toBeTruthy();
-//   expect(button).toHaveTextContent('Exit');
-// });
