@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import { useState } from "react"
+import './Nav.css';
 
 
 export default function Nav(): JSX.Element {
@@ -9,27 +10,27 @@ export default function Nav(): JSX.Element {
     setStyles({display: styles.display === 'none' ? 'block' : 'none'})
   }
   return (
-    <div>
-      <button onClick={handleClick} aria-haspopup={'menu'} aria-expanded={false}>
-        <label htmlFor="menu-button">Menu</label>
+    <>
+      <button className="menu-button button-chip button-chip__yellow button__shine-effect" onClick={handleClick} aria-haspopup={'menu'} aria-expanded={false}>
+        <label htmlFor="menuButtonCheckbox">Menu</label>
       </button>
-      <input type="checkbox" id="menu-button" />
-      <nav style={styles}>
-        <ul>
+      <input type="checkbox" id="menuButtonCheckbox" />
+      <nav style={styles} className="menu">
+        <ul className="menu-list">
           <li>
-            <Link to={'/'}>Play</Link>
+            <NavLink className="menu-list__link button__shine-effect" to={'/'}>Play</NavLink>
           </li>
           <li>
-            <Link to={'leaderboard'}>Leaderboard</Link>
+            <NavLink className="menu-list__link button__shine-effect" to={'leaderboard'}>Leaderboard</NavLink>
           </li>
           <li>
-            <Link to={'settings'}>Settings</Link>
+            <NavLink className="menu-list__link button__shine-effect" to={'settings'}>Settings</NavLink>
           </li>
           <li>
-            <Link to={'about'}>About</Link>
+            <NavLink className="menu-list__link button__shine-effect" to={'about'}>About</NavLink>
           </li>
         </ul>
       </nav>
-    </div>
+    </>
   )
 }
