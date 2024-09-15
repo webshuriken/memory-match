@@ -1,1 +1,24 @@
+.app {
+  padding-top: 68px;
+  height: 100%;
+  width: 100%;
+}
 
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  grid-template-rows: 60px auto;
+  align-items: center;
+  padding: 0 .4rem;
+  width: 100%;
+  background: rgb(var(--primary-color));
+  box-shadow: 0 2px 8px rgba(var(--theme-dark-color), .2), 0 2px 12px rgba(var(--theme-dark-color), .4);
+  z-index: 999;
+}
+.app-header > h1 {
+  padding: 0 .4rem;
+  font-size: 1.6rem;
+}
