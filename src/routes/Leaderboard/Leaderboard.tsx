@@ -17,7 +17,7 @@ export default function Leaderboard(): JSX.Element {
   const [lastGameStats, setLastGameStats] = useState<LastGameStatsType | null>(null);
   
   useEffect(() => {
-    if (location.state && leaderboard != null) {
+    if (location?.state?.time && leaderboard != null) {
       // extract last game stats
       const { time, moves, name } = location.state;
       
