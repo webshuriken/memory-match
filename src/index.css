@@ -1,13 +1,76 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: 'Lobster-Regular';
+  src: url('./fonts/Lobster_Two/LobsterTwo-Regular.ttf') format('truetype');
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  position: relative;
+  border: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: 12,79,12;
+  --secondary-color: 212,187,10;
+  --theme-red-color: 128,21,21;
+  --theme-dark-color: 15,13,13;
+  --theme-light-green-color: 45,139,45;
+  --theme-light-color: 241, 255, 205;
+  font-family: 'Lobster-Regular';
+  font-size: 16px;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  background: rgb(var(--primary-color));
+  color: rgb(var(--secondary-color));
+}
+
+
+/* ==========================
+ * == GLOBALS STYLES
+ * ========================== */
+.button-chip {
+  border-radius: 50%;
+  border: 4px solid rgb(var(--theme-dark-color));
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(var(--theme-dark-color), .4), 0 0 12px rgba(var(--theme-dark-color), .2);
+}
+
+ .button-chip__yellow {
+  background: rgb(var(--secondary-color));
+  color: rgb(var(--theme-dark-color));
+}
+
+.button-chip__red {}
+
+/* ==========================
+ * == ANIMATIONS
+ * ========================== */
+
+.button__shine-effect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10%;
+  height: 100%;
+  width: 4px;
+  background-color: rgba(255, 255, 255, .4);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 1);
+  transition: transform .6s;
+}
+
+.button__shine-effect:hover::after {
+  transform: translateX(280px);
+}
+
+.button__shine-effect:active {
+  transform: scale(.96);
 }
