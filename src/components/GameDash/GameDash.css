@@ -45,8 +45,6 @@
 /* MEDIA QUERIES */
 @media screen and (min-width: 768px) {
   .gamedash-tracking {
-    flex-flow: column wrap;
-    gap: 1rem;
     font-size: 1.2rem;
   }
 }
@@ -55,10 +53,14 @@
   .gamedash {
     grid-template-columns: 100%;
     grid-template-rows: 160px auto;
+    padding-top: 3rem;
+  }
+  .gamedash-button button {
+    font-size: 1.2rem;
   }
   .gamedash-tracking {
     flex-flow: column wrap;
     gap: 1rem;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
 }
