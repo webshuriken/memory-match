@@ -12,15 +12,13 @@ export default function Game():JSX.Element {
   return (
     <MovesProvider>
       <TimerProvider>
-        <article>
-          {
-            (gameReady)
-            ?
-              <GamePlay setGameReady={setGameReady} />
-            :
-              <GameEnd />
-          }
-        </article>
+        {
+          (gameReady)
+          ?
+            <GamePlay setGameReady={setGameReady} />
+          :
+            <GameEnd />
+        }
       </TimerProvider>
     </MovesProvider>
   );
