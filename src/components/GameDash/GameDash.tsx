@@ -3,6 +3,7 @@ import Timer from "../Timer/Timer";
 import ButtonChip from "../ButtonChip/ButtonChip";
 import { useTimerDispatch } from "../../context/TimerContext";
 import { useMovesDispatch } from "../../context/MovesContext";
+import './GameDash.css';
 
 
 export default function GameDash(): JSX.Element {
@@ -19,10 +20,10 @@ export default function GameDash(): JSX.Element {
 
   return (
     <>
-      <div>
+      <div className="gamedash-button">
         <ButtonChip value='Reset' handleClick={resetDash} />
       </div>
-      <section role="status">
+      <section role="status" className="gamedash-tracking">
         <Moves />
         <Timer />
       </section>
