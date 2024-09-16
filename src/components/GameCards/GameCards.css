@@ -50,6 +50,7 @@
   height: 100%;
   width: auto;
   border: 1px solid #000;
+  cursor: pointer;
 }
 
 .card-face {
