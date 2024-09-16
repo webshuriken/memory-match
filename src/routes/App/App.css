@@ -1,5 +1,10 @@
+/* =============================
+ * Styles the components:
+ * - App
+ * - ButtonChip
+ * ============================= */
 .app {
-  padding-top: 68px;
+  padding: 68px .8rem 0;
   height: 100%;
   width: 100%;
 }
@@ -21,4 +26,15 @@
 .app-header > h1 {
   padding: 0 .4rem;
   font-size: 1.6rem;
+}
+
+/* =================
+ * == Button Chip
+ * ================= */
+.the-button-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  width: 80px;;
 }

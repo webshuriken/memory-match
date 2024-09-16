@@ -27,9 +27,9 @@ export default function ButtonChip({
     <>
       {value === 'Button' || value.toLowerCase() === 'reset'
       ?
-        <button onClick={handleClick}>{value}</button>
+        <button onClick={handleClick} className="button-chip the-button-chip button-chip__red button__shine-effect">{value}</button>
       :
-        <button onClick={handleClick} onKeyDown={handleBtnKeyDown}>
+        <button onClick={handleClick} onKeyDown={handleBtnKeyDown} className="button-chip the-button-chip button-chip__red button__shine-effect">
           <Link to={url}>{value}</Link>
         </button>}
     </>
