@@ -71,11 +71,11 @@ body {
   width: 4px;
   background-color: rgba(255, 255, 255, .4);
   box-shadow: 0 0 16px rgba(255, 255, 255, 1);
-  transition: transform .6s;
+  transition: transform .5s linear;
 }
 
 .button__shine-effect:hover::after {
-  transform: translateX(280px);
+  transform: translateX(320px);
 }
 
 .button__shine-effect:active {
