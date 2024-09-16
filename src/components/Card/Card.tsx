@@ -26,9 +26,11 @@ export default function Card({
   const [cardID, setCardID] = useState<State>({id: id!, pairID: pairID!});
 
   return (
-    <div role="button" aria-label="game card" onClick={() => handleClick(cardID) }>
-      <img src={cover.src} alt={cover.alt} />
-      <img src={src} alt={alt} />
+    <div className="card" role="button" aria-label="game card" onClick={() => handleClick(cardID) }>
+      <div className="card-wrapper">
+        <img src={cover.src} alt={cover.alt} className="card-back" />
+        <img src={src} alt={alt} className="card-face" />
+      </div>
     </div>
   )
 }
