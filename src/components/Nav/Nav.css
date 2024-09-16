@@ -24,13 +24,22 @@
   opacity: 0;
 }
 
+/* ==== MENU */
 .menu {
+  position: absolute;
+  top: 0;
   grid-column: 1/3;
   grid-row: 2/3;
   height: auto;
   width: 100%;
   padding: 1.2rem .4rem;
   background: rgb(var(--primary-color));
+  transform: translateX(-1000px);
+  transition: transform .32s;
+  box-shadow: 0 2px 8px rgba(var(--theme-dark-color), .2), 0 2px 12px rgba(var(--theme-dark-color), .4);
+}
+.menu.open {
+  transform: translateX(0px);
 }
 
 .menu-list {
