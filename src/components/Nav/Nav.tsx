@@ -1,35 +1,47 @@
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import { useState } from "react"
+import './Nav.css';
 
+type MenuStateType = {
+  open: boolean;
+  class: string;
+}
 
 export default function Nav(): JSX.Element {
-  const [styles, setStyles] = useState({display: 'none'});
+  const [menu, setMenu] = useState<MenuStateType>({ open: false, class: 'menu' });
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    setStyles({display: styles.display === 'none' ? 'block' : 'none'})
+    // update state
+    setMenu(state => {
+      return {
+        open: !state.open,
+        class: state.open ? 'menu open' : 'menu',
+      }
+    });
   }
+  console.log("RUNNS ON EACH PAGE LOAD? ");
   return (
-    <div>
-      <button onClick={handleClick} aria-haspopup={'menu'} aria-expanded={false}>
-        <label htmlFor="menu-button">Menu</label>
+    <>
+      <button className="menu-button button-chip button-chip__yellow button__shine-effect" onClick={handleClick} aria-haspopup={'menu'} aria-expanded={false}>
+        <label htmlFor="menuButtonCheckbox">Menu</label>
       </button>
-      <input type="checkbox" id="menu-button" />
-      <nav style={styles}>
-        <ul>
+      <input type="checkbox" id="menuButtonCheckbox" />
+      <nav className={menu.class}>
+        <ul className="menu-list">
           <li>
-            <Link to={'/'}>Play</Link>
+            <NavLink className="menu-list__link button__shine-effect" to={'/'}>Play</NavLink>
           </li>
           <li>
-            <Link to={'leaderboard'}>Leaderboard</Link>
+            <NavLink className="menu-list__link button__shine-effect" to={'leaderboard'}>Leaderboard</NavLink>
           </li>
           <li>
-            <Link to={'settings'}>Settings</Link>
+            <NavLink className="menu-list__link button__shine-effect" to={'settings'}>Settings</NavLink>
           </li>
           <li>
-            <Link to={'about'}>About</Link>
+            <NavLink className="menu-list__link button__shine-effect" to={'about'}>About</NavLink>
           </li>
         </ul>
       </nav>
-    </div>
+    </>
   )
 }

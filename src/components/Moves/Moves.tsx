@@ -5,7 +5,7 @@ export default function Moves(): JSX.Element {
   const moves = useMovesContext();
 
   return (
-    <article>
+    <article className="gamedash-moves">
       <p>Moves</p>
       <p>
         <span>{moves}</span>

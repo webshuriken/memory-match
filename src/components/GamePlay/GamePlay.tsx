@@ -6,6 +6,7 @@ import { DeckOfCards, CloudinaryCardsList } from "../../globals/gameData";
 import { createRandomIDs } from "../../utils";
 import { useTimerDispatch, useTimerContext } from "../../context/TimerContext";
 import { useMovesDispatch } from "../../context/MovesContext";
+import './GamePlay.css';
 
 
 // parent passing in function to update their own state
@@ -132,8 +133,8 @@ export default function GamePlay({ setGameReady }: Props): JSX.Element {
   }, []);
 
   return (
-    <>
-      <aside role="complementary">
+    <section className="gameplay">
+      <aside role="complementary" className="gamedash">
         <GameDash />
       </aside>
       {
@@ -143,6 +144,6 @@ export default function GamePlay({ setGameReady }: Props): JSX.Element {
         :
           <p>Cards are loading..</p>
       }
-    </>
+    </section>
   )
 }

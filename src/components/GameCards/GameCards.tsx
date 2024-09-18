@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Card from "../Card/Card";
 import { iCardsType, iCardFacesType } from '../../custom-types/types'
+import './GameCards.css';
 
 
 type Props = {
@@ -77,13 +78,13 @@ export default function GameCards({ deckOfCards, handleCardClick }: Props): JSX.
   }
   
   return (
-    <div>
-      <ul>
+    <div className="gamecards">
+      <ul className="gamecards-list">
       {
         (faces !== null)
         ?
           faces.map((card, key)=> (
-            <li key={key}>
+            <li key={key} className="gamecards-list__item">
               <Card cover={cover} face={card} alt={alt} handleClick={handleClick} />
             </li>
           ))
