@@ -24,9 +24,14 @@ export default function Card({
   handleClick
 }: Props): JSX.Element {
   const [cardID, setCardID] = useState<State>({id: id!, pairID: pairID!});
+  // shall we flip card
+  let cardClass = 'card';
+  if (flipped) {
+    cardClass = 'card flip-card';
+  }
 
   return (
-    <div className="card" role="button" aria-label="game card" onClick={() => handleClick(cardID) }>
+    <div className={cardClass} role="button" aria-label="game card" onClick={() => handleClick(cardID) }>
       <div className="card-wrapper">
         <img src={cover.src} alt={cover.alt} className="card-back" />
         <img src={src} alt={alt} className="card-face" />
