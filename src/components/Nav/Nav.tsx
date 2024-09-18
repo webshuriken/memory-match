@@ -19,7 +19,7 @@ export default function Nav(): JSX.Element {
       }
     });
   }
-  console.log("RUNNS ON EACH PAGE LOAD? ");
+
   return (
     <>
       <button className="menu-button button-chip button-chip__yellow button__shine-effect" onClick={handleClick} aria-haspopup={'menu'} aria-expanded={false}>
