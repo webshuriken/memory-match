@@ -90,14 +90,18 @@ export default function GamePlay({ setGameReady }: Props): JSX.Element {
 
     // add the required meta to each card, while creating their double
     const cardsMeta:iCardFacesType[] = cards.reduce((prev: iCardFacesType[], curr: iCardFacesType, i: number) => {
+      // grab two ids, one for each pair
+      const idA = randomIDs.pop();
+      const idB = randomIDs.pop();
+      // meta for first card
       let meta:iCardFacesType = {
         ...curr,
-        id: randomIDs.pop(),
-        pairID: i,
+        id: idA,
+        pairID: idB,
         flipped: false
       }
-
-      return [...prev, meta, { ...meta, id: randomIDs.pop() }];
+      // meta for second card along side the first card
+      return [...prev, meta, { ...meta, id: idB, pairID: idA }];
     }, []);
     
     // return the augmented face cards
