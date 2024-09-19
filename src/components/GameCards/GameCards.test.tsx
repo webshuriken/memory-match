@@ -9,7 +9,7 @@ describe('Game Cards component', () => {
   let items: HTMLElement[];
 
   beforeEach(() => {
-    render(<GameCards deckOfCards={DeckOfCards.cards} handleCardClick={jest.fn} />);
+    render(<GameCards handleCardClick={jest.fn} />);
     list = screen.getByRole('list');
     items = within(list).getAllByRole('listitem');
   });
