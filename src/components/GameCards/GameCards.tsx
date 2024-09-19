@@ -59,18 +59,28 @@ export default function GameCards({ handleCardClick }: Props): JSX.Element {
    * @param reveal boolean - whether to reveal the card or hide it
    * @param card <iCardFacesType> - takes in a card to flip
    */
-  function updateCardsFace(id: number): void {
+  function updateCardsFace(cards: FlippedCardsType, stayFlipped: boolean): void {
+
     // update the deckOfCards
-    setDeckOfCards(deckOfCards => {
-      if (deckOfCards !== null) {
-        return {
-          ...deckOfCards,
-          faces: deckOfCards.faces.map(face => (face.id === id) ? { ...face, flipped: !face.flipped } : face)
-        }
+    if (deckOfCards !== null) {
+      let faces: iCardFacesType[];
+      if (cards.length === 1) {
+        const [firstCard] = cards;
+        faces = deckOfCards.faces.map(face => (face.id === firstCard.id) ? { ...face, flipped: stayFlipped } : face);
       }else{
-        return deckOfCards;
+        const [firstCard, secondCard] = cards;
+        faces = deckOfCards.faces.map(face => (face.id === firstCard.id || face.id === secondCard.id) ? { ...face, flipped: stayFlipped } : face);
       }
-    });
+      const deck = {
+        ...deckOfCards,
+        faces: faces
+      };
+      setDeckOfCards(deck);
+      // reset the flipped cards state
+      if (cards.length === 2) {
+        setFlippedCards([]);
+      }
+    }
   }
 
   /**
@@ -85,11 +95,7 @@ export default function GameCards({ handleCardClick }: Props): JSX.Element {
     
     if (deckOfCards !== null) {
       // update the deckOfCards
-      const deck = {
-        ...deckOfCards,
-        faces: deckOfCards.faces.map(face => (face.id === id) ? { ...face, flipped: !face.flipped } : face)
-      };
-      setDeckOfCards(deck);
+      updateCardsFace([{id, pairID}], true);
     }
 
     const newFlippedCards = [...flippedCards, { id, pairID }];
@@ -99,7 +105,6 @@ export default function GameCards({ handleCardClick }: Props): JSX.Element {
       checkForMatch(newFlippedCards);
     }
 
-    // TODO: make the code DRY
     // TODO: games need to be able to reset
     // TODO: activate timer
     // TODO: count moves
@@ -108,29 +113,14 @@ export default function GameCards({ handleCardClick }: Props): JSX.Element {
   }
 
   function checkForMatch(flippedCards: FlippedCardsType): void {
-    const [firstCard, secondCard] = flippedCards;
     let matchFound = false;
 
-    if (firstCard.pairID === secondCard.id) {
+    if (flippedCards[0].pairID === flippedCards[1].id) {
       matchFound = true;
-      if (deckOfCards !== null) {
-        const deck = {
-          ...deckOfCards,
-          faces: deckOfCards.faces.map(face => (face.id === firstCard.id || face.id === secondCard.id) ? { ...face, flipped: true } : face)
-        };
-        setDeckOfCards(deck);
-        setFlippedCards([]);
-      }
+      updateCardsFace(flippedCards, true);
     }else{
       setTimeout(() => {
-        if (deckOfCards !== null) {
-          const deck = {
-            ...deckOfCards,
-            faces: deckOfCards.faces.map(face => (face.id === firstCard.id || face.id === secondCard.id) ? { ...face, flipped: false } : face)
-          };
-          setDeckOfCards(deck);
-          setFlippedCards([]);
-        }
+        updateCardsFace(flippedCards, false);
       }, 600);
     }
   }
