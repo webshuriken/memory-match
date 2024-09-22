@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Card from "../Card/Card";
-import { DeckOfCards, CloudinaryCardsList } from "../../globals/gameData";
+import { DeckOfCards } from "../../globals/gameData";
 import { createRandomIDs } from "../../utils";
 import { iCardsType, iCardFacesType } from '../../custom-types/types'
 import './GameCards.css';
@@ -13,7 +13,11 @@ type Props = {
 type FlippedCardsType = {
   id: number;
   pairID?: number;
-}[]
+}[];
+
+type FacesURLType = {
+  src: string
+}[];
 
 export default function GameCards({ handleCardClick }: Props): JSX.Element {
   // component state
@@ -112,18 +116,10 @@ export default function GameCards({ handleCardClick }: Props): JSX.Element {
 
   /**
    * Add meta to each card to play the game
+   * @param cards <iCardFacesType[]> - the array of cards to augment
+   * @returns <iCardFacesType[]>
    */
   function addCardsMeta(cards: iCardFacesType[]): iCardFacesType[] {
-    // TODO: UNCOMMENT THE CODE SO WE CAN FETCH IMAGES AGAIN
-    // get the url for the faces images
-    // const faces:FacesURLType = CloudinaryCardsList.faces.map(imagePublicID => {
-    //   const eminem = fetchImageURL(imagePublicID);
-    //   return {
-    //     src: eminem
-    //   }
-    // });
-    // now grab the url for cover card
-    //cover.src = fetchImageURL(CloudinaryCardsList.cover);
     // get random ids
     const randomIDs: number[] = createRandomIDs(cards.length * 2);
 
@@ -132,9 +128,10 @@ export default function GameCards({ handleCardClick }: Props): JSX.Element {
       // grab two ids, one for each pair
       const idA = randomIDs.pop();
       const idB = randomIDs.pop();
+
       // meta for first card
       let meta:iCardFacesType = {
-        ...curr,
+        src: fetchImageURL(curr.src),
         id: idA,
         pairID: idB,
         flipped: false
@@ -166,10 +163,13 @@ export default function GameCards({ handleCardClick }: Props): JSX.Element {
   useEffect(() => {
     // augment the cards. no need to change unless loading a new deck
     let augmentedCards = addCardsMeta(DeckOfCards.cards.faces);
-    // shuffle
+    // construct augmented deck and shuffle cards
     let augmentedDeck = { 
       alt: DeckOfCards.cards.alt,
-      cover: DeckOfCards.cards.cover,
+      cover: {
+        alt: DeckOfCards.cards.cover.alt,
+        src: fetchImageURL(DeckOfCards.cards.cover.src)
+      },
       faces: shuffleCards(augmentedCards)
     };
     setDeckOfCards(augmentedDeck)
