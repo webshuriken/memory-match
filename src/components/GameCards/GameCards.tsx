@@ -29,11 +29,10 @@ export default function GameCards({ gameReady, resetGame, setResetGame, handleCa
    * @param {string} imagePublicID - Cloudinary public ID for the image
    * @returns {string} url of the image
    */
-    function fetchImageURL(imagePublicID: string): string {
-      const folderName = 'memory-match-cards';
-      const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${folderName}/${imagePublicID}`
-      return url;
-    }
+  function fetchImageURL(imagePublicID: string): string {
+    const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${process.env.REACT_APP_CLOUD_FOLDER}/${imagePublicID}`
+    return url;
+  }
 
   /**
    * 
