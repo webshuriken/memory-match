@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import Card from "../Card/Card";
 import { DeckOfCards } from "../../globals/gameData";
 import { createRandomIDs } from "../../utils";
@@ -7,6 +7,9 @@ import './GameCards.css';
 
 
 type Props = {
+  gameReady: boolean;
+  setResetGame: Dispatch<SetStateAction<boolean>>;
+  resetGame: boolean;
   handleCardClick: (matchFound: boolean, incrementMoves: boolean) => void;
 }
 
@@ -15,7 +18,7 @@ type FlippedCardsType = {
   pairID?: number;
 }[];
 
-export default function GameCards({ handleCardClick }: Props): JSX.Element {
+export default function GameCards({ gameReady, resetGame, setResetGame, handleCardClick }: Props): JSX.Element {
   // component state
   const [flippedCards, setFlippedCards] = useState<FlippedCardsType>([]);
   // we just need the face cards and the cover
@@ -157,25 +160,37 @@ export default function GameCards({ handleCardClick }: Props): JSX.Element {
   }
   
   useEffect(() => {
-    // augment the cards. no need to change unless loading a new deck
-    let augmentedCards = addCardsMeta(DeckOfCards.cards.faces);
-    // construct augmented deck and shuffle cards
-    let augmentedDeck = { 
-      alt: DeckOfCards.cards.alt,
-      cover: {
-        alt: DeckOfCards.cards.cover.alt,
-        src: fetchImageURL(DeckOfCards.cards.cover.src)
-      },
-      faces: shuffleCards(augmentedCards)
-    };
-    setDeckOfCards(augmentedDeck)
-  }, []);
+    if (deckOfCards === null && gameReady) {
+      // augment the cards. no need to change unless loading a new deck
+      let augmentedCards = addCardsMeta(DeckOfCards.cards.faces);
+      // construct augmented deck and shuffle cards
+      let augmentedDeck = { 
+        alt: DeckOfCards.cards.alt,
+        cover: {
+          alt: DeckOfCards.cards.cover.alt,
+          src: fetchImageURL(DeckOfCards.cards.cover.src)
+        },
+        faces: shuffleCards(augmentedCards)
+      };
+      setDeckOfCards(augmentedDeck);
+    }
+    // on game reset just shuffle the cards and flip them back
+    if (deckOfCards !== null && resetGame) {
+      const shuffledCards = {
+        ...deckOfCards,
+        faces: shuffleCards(deckOfCards.faces)
+      }
+
+      setDeckOfCards(shuffledCards)
+      setResetGame(false);
+    }
+  }, [resetGame]);
   
   return (
     <div className="gamecards">
       <ul className="gamecards-list">
       {
-        (deckOfCards !== null)
+        (deckOfCards !== null && gameReady)
         ?
         deckOfCards.faces.map((card, key)=> (
             <li key={key} className="gamecards-list__item">

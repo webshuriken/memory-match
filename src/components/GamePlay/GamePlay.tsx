@@ -9,12 +9,14 @@ import './GamePlay.css';
 
 // parent passing in function to update their own state
 type Props = {
+  gameReady: boolean;
   setGameReady: (value: boolean) => void;
 }
 
 // this component should be taking care of preping the whole game
-export default function GamePlay({ setGameReady }: Props): JSX.Element {
+export default function GamePlay({ gameReady, setGameReady }: Props): JSX.Element {
   const [matchesFound, setMatchesFound] = useState<number>(0);
+  const [resetGame, setResetGame] = useState<boolean>(false);
 
   // timer context
   const {ticking} = useTimerContext();
@@ -46,20 +48,22 @@ export default function GamePlay({ setGameReady }: Props): JSX.Element {
     if (DeckOfCards.size === (matchesFound + 1)) {
       console.log("GAME: all matches found, ending game")
       // inform Game component the game has finished
-      setGameReady(false)
+      setTimeout(() => {
+        setGameReady(false);
+      }, 600);
     }else{
       console.log("GAME: match found!")
       // increment by 2 because we are removing a pair of cards from play
-      setMatchesFound(prevState => prevState + 2);
+      setMatchesFound(prevState => prevState + 1);
     }
   }
 
   return (
     <section className="gameplay">
       <aside role="complementary" className="gamedash">
-        <GameDash />
+        <GameDash setResetGame={setResetGame} />
       </aside>
-      <GameCards handleCardClick={handleCardClick} />
+      <GameCards gameReady={gameReady} resetGame={resetGame} setResetGame={setResetGame}  handleCardClick={handleCardClick} />
     </section>
   )
 }
