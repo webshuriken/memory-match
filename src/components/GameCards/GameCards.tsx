@@ -15,10 +15,6 @@ type FlippedCardsType = {
   pairID?: number;
 }[];
 
-type FacesURLType = {
-  src: string
-}[];
-
 export default function GameCards({ handleCardClick }: Props): JSX.Element {
   // component state
   const [flippedCards, setFlippedCards] = useState<FlippedCardsType>([]);
