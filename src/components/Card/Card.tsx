@@ -31,11 +31,13 @@ export default function Card({
   }
 
   return (
-    <div className={cardClass} role="button" aria-label="game card" onClick={() => handleClick(cardID) }>
-      <div className="card-wrapper">
-        <img src={cover.src} alt={cover.alt} className="card-back" />
-        <img src={face.src} alt={alt} className="card-face" />
+    <li className="gamecards-list__item">
+      <div className={cardClass} role="button" aria-label="game card" onClick={() => handleClick(cardID) }>
+        <div className="card-wrapper">
+          <img src={cover.src} alt={cover.alt} className="card-back" />
+          <img src={face.src} alt={alt} className="card-face" />
+        </div>
       </div>
-    </div>
+    </li>
   )
 }

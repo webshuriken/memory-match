@@ -192,10 +192,8 @@ export default function GameCards({ gameReady, resetGame, setResetGame, handleCa
       {
         (deckOfCards !== null && gameReady)
         ?
-        deckOfCards.faces.map((card, key)=> (
-            <li key={key} className="gamecards-list__item">
-              <Card cover={deckOfCards.cover} face={card} alt={deckOfCards.alt} handleClick={handleClick} />
-            </li>
+          deckOfCards.faces.map((card, key)=> (
+            <Card key={card.id} cover={deckOfCards.cover} face={card} alt={deckOfCards.alt} handleClick={handleClick} />
           ))
         :
           <li>
