@@ -32,7 +32,6 @@ export default function GameCards({ handleCardClick }: Props): JSX.Element {
       return url;
     }
 
-
   /**
    * 
    * @param cards <FlippedCardType[]> - an array of 1 card or 2 cards that have been flipped
@@ -87,17 +86,16 @@ export default function GameCards({ handleCardClick }: Props): JSX.Element {
     // locally mutate for further use and state update
     let newFlippedCards: FlippedCardsType;
     if (flippedCards.length === 0 || flippedCards.length === 1 && flippedCards[0].id !== id) {
-      console.log("NO REPEATS")
       newFlippedCards = [...flippedCards, { id, pairID }];
       bustaMove = true;
     }else{
       newFlippedCards = flippedCards;
     }
+    // state update
     setFlippedCards(newFlippedCards);
 
     // with two cards facing  us we can check if they are a match
     if (newFlippedCards.length === 2) {
-      console.log("WILL A SECOND CLICK OF THE SAME CARD")
       // are they matching
       if (newFlippedCards[0].pairID === newFlippedCards[1].id) {
         matchFound = true;
@@ -110,19 +108,6 @@ export default function GameCards({ handleCardClick }: Props): JSX.Element {
     }
 
     handleCardClick(matchFound, bustaMove);
-  }
-
-  function checkForMatch(flippedCards: FlippedCardsType): void {
-    let matchFound = false;
-    
-    if (flippedCards[0].pairID === flippedCards[1].id) {
-      matchFound = true;
-      updateCardsFace(flippedCards, true);
-    }else{
-      setTimeout(() => {
-        updateCardsFace(flippedCards, false);
-      }, 600);
-    }
   }
 
   /**
