@@ -1,24 +1,10 @@
 import { LeaderboardType, iDeckOfCardsType } from "../custom-types/types"
-import cardPlaceholderURL from './cards-placeholder.png';
+import cardBackPlaceholderURL from './cards-placeholder.png';
+import cardFacePlaceholderURL from './cards-yuki.png';
 
 
 // TODO: FEAT-Game-1: how we expose this data can be changed
 // exposes the images public id for the faces and cover.
-export const CloudinaryCardsList: { faces: string[]; cover: string } = {
-  faces: [
-    'cards-blue_hair_uubbsf.png',
-    'cards-haku_oxsscv.png',
-    'cards-plant_me_thzzz5.png',
-    'cards-dragon_plfggm.png',
-    'cards-swirl_lady_gagxsr.png',
-    'cards-spiral_eye_ueslyj.png',
-    'cards-red_hair_f2hosm.png',
-    'cards-yuki_greig0.png'
-  ],
-  cover: 'cards-cover_tusv76.png'
-}
-
-// exposes a deck of cards
 export const DeckOfCards: iDeckOfCardsType = {
   author: {
     name: [
@@ -32,12 +18,19 @@ export const DeckOfCards: iDeckOfCardsType = {
   },
   cards: {
     alt: 'this is a memory card so, no peaking',
-    faces: [{
-      src: cardPlaceholderURL
-    }],
+    faces: [
+      { src: 'cards-blue_hair_uubbsf.png' },
+      { src: 'cards-haku_oxsscv.png' },
+      { src: 'cards-plant_me_thzzz5.png' },
+      { src: 'cards-dragon_plfggm.png' },
+      { src: 'cards-swirl_lady_gagxsr.png' },
+      { src: 'cards-spiral_eye_ueslyj.png' },
+      { src: 'cards-red_hair_f2hosm.png' },
+      { src: 'cards-yuki_greig0.png' }
+    ],
     cover: {
       alt: 'poker mixed with some old doodles',
-      src: cardPlaceholderURL
+      src: 'cards-cover_tusv76.png'
     },
   },
   size: 8,

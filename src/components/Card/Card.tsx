@@ -18,24 +18,26 @@ interface State {
 }
 
 export default function Card({
-  cover, 
-  face: { src, id, flipped, pairID }, 
   alt,
+  cover, 
+  face, 
   handleClick
 }: Props): JSX.Element {
-  const [cardID, setCardID] = useState<State>({id: id!, pairID: pairID!});
+  const [cardID, setCardID] = useState<State>({id: face.id!, pairID: face.pairID!});
   // shall we flip card
   let cardClass = 'card';
-  if (flipped) {
+  if (face.flipped) {
     cardClass = 'card flip-card';
   }
 
   return (
-    <div className={cardClass} role="button" aria-label="game card" onClick={() => handleClick(cardID) }>
-      <div className="card-wrapper">
-        <img src={cover.src} alt={cover.alt} className="card-back" />
-        <img src={src} alt={alt} className="card-face" />
+    <li className="gamecards-list__item">
+      <div className={cardClass} role="button" aria-label="game card" onClick={() => handleClick(cardID) }>
+        <div className="card-wrapper">
+          <img src={cover.src} alt={cover.alt} className="card-back" />
+          <img src={face.src} alt={alt} className="card-face" />
+        </div>
       </div>
-    </div>
+    </li>
   )
 }
