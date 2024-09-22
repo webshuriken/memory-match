@@ -15,7 +15,7 @@ export default function Game():JSX.Element {
         {
           (gameReady)
           ?
-            <GamePlay setGameReady={setGameReady} />
+            <GamePlay gameReady={gameReady} setGameReady={setGameReady} />
           :
             <GameEnd />
         }

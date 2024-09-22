@@ -176,13 +176,16 @@ export default function GameCards({ gameReady, resetGame, setResetGame, handleCa
     }
     // on game reset just shuffle the cards and flip them back
     if (deckOfCards !== null && resetGame) {
+      const resetCardFaces = deckOfCards.faces.map(face => ({ ...face, flipped: false }) );
       const shuffledCards = {
         ...deckOfCards,
-        faces: shuffleCards(deckOfCards.faces)
+        faces: shuffleCards(resetCardFaces)
       }
 
-      setDeckOfCards(shuffledCards)
+      
       setResetGame(false);
+      setDeckOfCards(shuffledCards);
+      setFlippedCards([]);
     }
   }, [resetGame]);
   

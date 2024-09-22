@@ -58,6 +58,13 @@ export default function GamePlay({ gameReady, setGameReady }: Props): JSX.Elemen
     }
   }
 
+  useEffect(() => {
+    // lets reset the matches found baby
+    if (resetGame) {
+      setMatchesFound(0);
+    }
+  }, [resetGame])
+
   return (
     <section className="gameplay">
       <aside role="complementary" className="gamedash">
