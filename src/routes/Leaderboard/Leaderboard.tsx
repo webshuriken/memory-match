@@ -4,6 +4,7 @@ import PageHeader from "../../components/PageHeader/PageHeader"
 import LeaderboardTable from "../../components/LeaderboardTable/LeaderboardTable";
 import { useEffect, useState } from "react";
 import { LeaderboardType, LastGameStatsType } from "../../custom-types/types";
+import './Leaderboard.css';
 // npm packages
 import ShortUniqueId from 'short-unique-id';
 
@@ -87,8 +88,9 @@ export default function Leaderboard(): JSX.Element {
     default: "We only store the last 50 game entries. Can you find yours??"
   }
 
+  // TODO: WHAT IS THIS LOOSER TABLE ALL ABOUT? DO WE NEED IT?
   return (
-    <article>
+    <section className="leadboard">
       <PageHeader 
         title="Leaderboard" 
         msg={lastGameStats == null ? msgs.default : lastGameStats.inLeaderboard ? msgs.good : msgs.bad }
@@ -96,7 +98,7 @@ export default function Leaderboard(): JSX.Element {
       <LeaderboardTable lastGameStats={lastGameStats} />
       {
         lastGameStats?.inLeaderboard ? <span></span> : (
-          <table className="looser-table">
+          <table className="leadboard-table looser-table">
             <tbody>
               <tr>
                 <td>{lastGameStats?.playerStats.name}</td>
@@ -107,6 +109,6 @@ export default function Leaderboard(): JSX.Element {
           </table>
         )
       }
-    </article>
+    </section>
   )
 }
