@@ -10,12 +10,12 @@ export default function LeaderboardTable({ lastGameStats }: Props): JSX.Element 
   const [leaderboard] = useLeaderboard();
 
   return (
-    <table>
+    <table className="leadboard-table">
       <thead>
         <tr>
           <th>Name</th>
           <th>Moves</th>
-          <th>Time</th>
+          <th className="leadtable-col__time">Time</th>
           <th>Score</th>
         </tr>
       </thead>
@@ -28,7 +28,7 @@ export default function LeaderboardTable({ lastGameStats }: Props): JSX.Element 
               <tr key={data.id} className={data.id === lastGameStats?.playerStats.id ? "last-game-stats__row" : "leaderboard-stats__row"}>
                 <td>{data.name}</td>
                 <td>{data.moves}</td>
-                <td>{data.time}</td>
+                <td className="leadtable-col__time">{data.time}</td>
                 <td>{data.position}</td>
               </tr>
             )
