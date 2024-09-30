@@ -10,6 +10,7 @@
   grid-template-columns: 84px auto;
   grid-template-rows: 1fr;
   gap: .4rem;
+  justify-self: center;
   width: min(400px, 100%);
 }
 
