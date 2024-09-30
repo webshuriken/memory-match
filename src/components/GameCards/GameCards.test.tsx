@@ -7,10 +7,9 @@ const gameInProgress = false;
 describe('Game Cards component', () => {
   let list: HTMLElement;
   let items: HTMLElement[];
-  let URL = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${process.env.REACT_APP_CLOUD_FOLDER}`;
 
   beforeEach(() => {
-    render(<GameCards gameReady resetGame setResetGame={jest.fn} handleCardClick={jest.fn} />);
+    render(<GameCards deckOfCards={DeckOfCards.cards} handleCardClick={jest.fn} />);
     list = screen.getByRole('list');
     items = within(list).getAllByRole('listitem');
   });
@@ -25,7 +24,7 @@ describe('Game Cards component', () => {
 
   // generic test, as the game currently only handles a deck of 8 cards
   test('list has 16 items', () => {
-    const deckLength = DeckOfCards.cards.faces.length * 2;
+    const deckLength = DeckOfCards.cards.faces.length;
     expect(items).toHaveLength(deckLength);
   });
   
@@ -39,17 +38,19 @@ describe('Game Cards component', () => {
     expect(images).toHaveLength(2);
   });
 
-  test('cover image has src = "cards-cover_tusv76.png" with alt = "poker mixed with some old doodles"', () => {
-    const imgSrc = `${URL}/cards-cover_tusv76.png`;
+  test('cover image has src = "cards-placeholder.png" with alt = "poker mixed with some old doodles"', () => {
+    const imgSrc = 'cards-placeholder.png';
     const imgAlt = 'poker mixed with some old doodles';
     const images = within(items[0]).getAllByRole('img');
     expect(images[0]).toHaveAttribute('src', imgSrc);
     expect(images[0]).toHaveAttribute('alt', imgAlt);
   });
 
-  test('face image has alt = "this is a memory card so, no peaking"', () => {
+  test('face image has src = "cards-placeholder.png" with alt = "this is a memory card so, no peaking"', () => {
+    const imgSrc = 'cards-placeholder.png';
     const imgAlt = 'this is a memory card so, no peaking';
     const images = within(items[0]).getAllByRole('img');
+    expect(images[1]).toHaveAttribute('src', imgSrc);
     expect(images[1]).toHaveAttribute('alt', imgAlt);
   });
 });

@@ -1,44 +1,70 @@
-# Memory Match
+# Getting Started with Create React App
 
-A fun memory game with cards, just find the pairs.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## To Tackle
+## Available Scripts
 
-A list of things to tackle that are not features but possible issues:
+In the project directory, you can run:
 
-- the `short-unique-id` npm package is not working properly with TS
-  - The documentation says that it is compatible but i get errors.
-  - Tried copying the code form the docs which says TS and still get error
-  - Had to give it a type of any _not so nice hack_ to get it to work
+### `npm start`
 
-- Leaderboard.tsx implements the leaderboard table update assuming that
-the list is given in ascending order according to the players position.
-If the list is given in random order then it can cause trouble with the position
-of players.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## Thoughts
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-The project was an excellent opportunity to practice my Typescript. To tell the truth, slow start and strong finish. I am loving the idea of typing in JS, specially the ability to create custom types. Dwelling on the past is no use when you want to evolve. I do want to point out, that adding types to a project definately needs planning and takes time!, still fun.
+### `npm test`
 
-The images for the app are hosted in Cloudinary and so far their service has been fantastic. Getting started with the SDK was a struggle because it kept talking about transforming images and not so much on how to create simple requests for an image. The SDK for React is nice but a little much for this project. In the end I used a basic request for the images url so I can display them.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## Future features
+### `npm run build`
 
-- **FEAT-Game-1**
-  - refactor the code so we can use other set of images for the deck of cards.
-  - allows a user to select the deck they want to use
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-- Create the setting page to allow a user to:
-  - choose a deck of cards (this can be added through github PR)
-  - choose the difficulty (how many cards to play with).
-  Any deck will work as the app will only need to deal the amount matching the difficulty level.
-  So if a deck has 16 cards and easy level is 6 cards, then we will only deal 6 random cards from the deck of 16.
-  - night or day time mode
-- Store players data in a DB so we can use this data to make the game more competitive.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-## Acknowledgements
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-Here are some of the npm packages I used for the project:
+### `npm run eject`
 
-- [badwords-filter](https://www.npmjs.com/package/badwords-filter) An easy-to-use word filter with advanced detection techniques.
-- [badwords](https://www.npmjs.com/package/badwords) A highly consumable list of bad (profanity) English words based on the nice short and simple list found in Google's "what do you love" project made accessible by Jamie Wilkinson.
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

@@ -1,51 +1,35 @@
-import { NavLink } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useState } from "react"
-import './Nav.css';
-
-type MenuStateType = {
-  open: boolean;
-  class: string;
-}
-
-// function is used by anchor and button elements to open menu
-type HandleClickType = React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLAnchorElement, MouseEvent>;
 
 
 export default function Nav(): JSX.Element {
-  const [menu, setMenu] = useState<MenuStateType>({ open: false, class: 'menu' });
+  const [styles, setStyles] = useState({display: 'none'});
 
-  function handleClick(event: HandleClickType) {
-    // update state
-    setMenu(state => {
-      return {
-        open: !state.open,
-        class: !state.open ? 'menu open' : 'menu',
-      }
-    });
+  function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    setStyles({display: styles.display === 'none' ? 'block' : 'none'})
   }
-
   return (
-    <>
-      <button className="menu-button button-chip button-chip__yellow button__shine-effect" onClick={handleClick} aria-haspopup={'menu'} aria-expanded={false}>
-        <label htmlFor="menuButtonCheckbox">Menu</label>
+    <div>
+      <button onClick={handleClick} aria-haspopup={'menu'} aria-expanded={false}>
+        <label htmlFor="menu-button">Menu</label>
       </button>
-      <input type="checkbox" id="menuButtonCheckbox" />
-      <nav className={menu.class}>
-        <ul className="menu-list">
+      <input type="checkbox" id="menu-button" />
+      <nav style={styles}>
+        <ul>
           <li>
-            <NavLink className="menu-list__link button__shine-effect" to={'/'} onClick={handleClick}>Play</NavLink>
+            <Link to={'/'}>Play</Link>
           </li>
           <li>
-            <NavLink className="menu-list__link button__shine-effect" to={'leaderboard'} onClick={handleClick}>Leaderboard</NavLink>
+            <Link to={'leaderboard'}>Leaderboard</Link>
           </li>
           <li>
-            <NavLink className="menu-list__link button__shine-effect" to={'settings'} onClick={handleClick}>Settings</NavLink>
+            <Link to={'settings'}>Settings</Link>
           </li>
           <li>
-            <NavLink className="menu-list__link button__shine-effect" to={'about'} onClick={handleClick}>About</NavLink>
+            <Link to={'about'}>About</Link>
           </li>
         </ul>
       </nav>
-    </>
+    </div>
   )
 }

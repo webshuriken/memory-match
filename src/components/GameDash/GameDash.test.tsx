@@ -4,13 +4,13 @@ import GameDash from "./GameDash";
 
 describe('GameDash component', () => {
   test('component renders', () => {
-    render(<GameDash setResetGame={jest.fn} />);
+    render(<GameDash />);
     expect(screen).toBeTruthy();
   });
   
   describe('The dashboard intial render', () => {
     beforeEach(() => {
-      render(<GameDash setResetGame={jest.fn} />);
+      render(<GameDash />);
     });
 
     test('reset button renders', () => {

@@ -1,201 +1,91 @@
-import { useState, useEffect, SetStateAction, Dispatch } from "react";
+import { useState, useEffect } from "react";
 import Card from "../Card/Card";
-import { DeckOfCards } from "../../globals/gameData";
-import { createRandomIDs } from "../../utils";
 import { iCardsType, iCardFacesType } from '../../custom-types/types'
-import './GameCards.css';
 
 
 type Props = {
-  gameReady: boolean;
-  setResetGame: Dispatch<SetStateAction<boolean>>;
-  resetGame: boolean;
+  deckOfCards: iCardsType;
   handleCardClick: (matchFound: boolean, incrementMoves: boolean) => void;
 }
 
-type FlippedCardsType = {
-  id: number;
-  pairID?: number;
-}[];
+type LastCardFlipType = {
+  id: number | undefined;
+  pairID: number| undefined;
+}
 
-export default function GameCards({ gameReady, resetGame, setResetGame, handleCardClick }: Props): JSX.Element {
+export default function GameCards({ deckOfCards, handleCardClick }: Props): JSX.Element {
   // component state
-  const [flippedCards, setFlippedCards] = useState<FlippedCardsType>([]);
-  // we just need the face cards and the cover
-  const [deckOfCards, setDeckOfCards] = useState<iCardsType | null>(null);
-
-  /**
-   * Takes the name of an image and returns the URL made available by Cloudinary
-   * @param {string} imagePublicID - Cloudinary public ID for the image
-   * @returns {string} url of the image
-   */
-  function fetchImageURL(imagePublicID: string): string {
-    const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${process.env.REACT_APP_CLOUD_FOLDER}/${imagePublicID}`
-    return url;
-  }
-
-  /**
-   * 
-   * @param cards <FlippedCardType[]> - an array of 1 card or 2 cards that have been flipped
-   * @param stayFlipped boolean - lets us know if we should flip the card
-   */
-  function updateCardsFace(cards: FlippedCardsType, stayFlipped: boolean): void {
-    // update the deckOfCards
-    if (deckOfCards !== null) {
-      let faces: iCardFacesType[];
-      // only flip a single card
-      if (cards.length === 1) {
-        const [firstCard] = cards;
-        faces = deckOfCards.faces.map(face => (face.id === firstCard.id) ? { ...face, flipped: stayFlipped } : face);
-      }else{
-        // we are flippin two card back or keeping them wide open
-        const [firstCard, secondCard] = cards;
-        faces = deckOfCards.faces.map(face => (face.id === firstCard.id || face.id === secondCard.id) ? { ...face, flipped: stayFlipped } : face);
-      }
-      // locally mutate a new deck
-      const deck = {
-        ...deckOfCards,
-        faces: faces
-      };
-      // now update the state with local mutation
-      setDeckOfCards(deck);
-      // reset the flipped cards state
-      if (cards.length === 2) {
-        setFlippedCards([]);
-      }
-    }
-  }
+  const [lastCardFlip, setLastCardFlip] = useState<LastCardFlipType>({ id: undefined, pairID: undefined });
+  const {alt, cover, faces} = deckOfCards;
 
   /**
    * receives the id, pairID to find a match or store to be matched from a card click
    * @param {<{id: number, pairID: number}>} object - card values passed in
    */
   function handleClick({ id, pairID }: { id: number, pairID: number }): void {
-    // ignore any further requests after two cards are flipped
-    if (flippedCards.length === 2) {
-      return;
-    }
-    
-    // here for TS sakes
-    if (deckOfCards !== null) {
-      // update the deckOfCards
-      updateCardsFace([{id, pairID}], true);
-    }
-
+    // we use it tell parent when we find a match and whether to increment moves counter
     let matchFound = false;
-    let bustaMove = false;
-
-    // locally mutate for further use and state update
-    let newFlippedCards: FlippedCardsType;
-    if (flippedCards.length === 0 || flippedCards.length === 1 && flippedCards[0].id !== id) {
-      newFlippedCards = [...flippedCards, { id, pairID }];
-      bustaMove = true;
+    let incrementMoves = false;
+    // is this a new card flip
+    if (lastCardFlip.id === undefined) {
+      const update: iCardFacesType[] = faces.map(face => {
+        if (face.id === id) {
+          return {
+            ...face, 
+            flipped: !face.flipped
+          };
+        }else{
+          return face;
+        }
+      });
+      // tracking the last card flipped
+      setLastCardFlip(prevState => prevState === null ? prevState : { id, pairID });
     }else{
-      newFlippedCards = flippedCards;
-    }
-    // state update
-    setFlippedCards(newFlippedCards);
-
-    // with two cards facing  us we can check if they are a match
-    if (newFlippedCards.length === 2) {
-      // are they matching
-      if (newFlippedCards[0].pairID === newFlippedCards[1].id) {
+      incrementMoves = true;
+      // use state and passed in fn() argument to check for match
+      if (id !== lastCardFlip.id && pairID === lastCardFlip.pairID) {
         matchFound = true;
-        updateCardsFace(newFlippedCards, true);
-      }else{
-        setTimeout(() => {
-          updateCardsFace(newFlippedCards, false);
-        }, 600);
-      }
-    }
-
-    handleCardClick(matchFound, bustaMove);
-  }
-
-  /**
-   * Add meta to each card to play the game
-   * @param cards <iCardFacesType[]> - the array of cards to augment
-   * @returns <iCardFacesType[]>
-   */
-  function addCardsMeta(cards: iCardFacesType[]): iCardFacesType[] {
-    // get random ids
-    const randomIDs: number[] = createRandomIDs(cards.length * 2);
-
-    // add the required meta to each card, while creating their double
-    const cardsMeta:iCardFacesType[] = cards.reduce((prev: iCardFacesType[], curr: iCardFacesType, i: number) => {
-      // grab two ids, one for each pair
-      const idA = randomIDs.pop();
-      const idB = randomIDs.pop();
-
-      // meta for first card
-      let meta:iCardFacesType = {
-        src: fetchImageURL(curr.src),
-        id: idA,
-        pairID: idB,
-        flipped: false
-      }
-      // meta for second card along side the first card
-      return [...prev, meta, { ...meta, id: idB, pairID: idA }];
-    }, []);
-    
-    // return the augmented face cards
-    return cardsMeta;
-  }
-
-  /**
-   * Shuffles the cards, adding uniqueIDs
-   * @param {iCardFacesType[]} cards - a set of cards to shuffle
-   * @returns {iCardFacesType[]}
-   */
-  function shuffleCards(cards: iCardFacesType[]): iCardFacesType[] {
-    const randSet: number[] = createRandomIDs(cards.length - 1);
-
-    const shuffledCards: iCardFacesType[] = [];
-    for (let i=0; i<cards.length; i++) {
-      shuffledCards.push(cards[randSet[i]]);
-    }
-
-    return shuffledCards;
-  }
-  
-  useEffect(() => {
-    if (deckOfCards === null && gameReady) {
-      // augment the cards. no need to change unless loading a new deck
-      let augmentedCards = addCardsMeta(DeckOfCards.cards.faces);
-      // construct augmented deck and shuffle cards
-      let augmentedDeck = { 
-        alt: DeckOfCards.cards.alt,
-        cover: {
-          alt: DeckOfCards.cards.cover.alt,
-          src: fetchImageURL(DeckOfCards.cards.cover.src)
-        },
-        faces: shuffleCards(augmentedCards)
-      };
-      setDeckOfCards(augmentedDeck);
-    }
-    // on game reset just shuffle the cards and flip them back
-    if (deckOfCards !== null && resetGame) {
-      const resetCardFaces = deckOfCards.faces.map(face => ({ ...face, flipped: false }) );
-      const shuffledCards = {
-        ...deckOfCards,
-        faces: shuffleCards(resetCardFaces)
       }
 
-      
-      setResetGame(false);
-      setDeckOfCards(shuffledCards);
-      setFlippedCards([]);
+      // create an update for the state depending on matchFound
+      const update: iCardFacesType[] = faces.map((face) => {
+        if (matchFound) {
+          // flip the switch on latest flip
+          if (face.id === id) {
+            return {
+              ...face,
+              flipped: !face.flipped
+            }
+          }
+          return face
+        }else{
+          // remove flipped switch from previous click
+          if (face.id === lastCardFlip.id) {
+            return {
+              ...face,
+              flipped: !face.flipped
+            }
+          }
+          return face
+        }
+      });
+      // reset local state
+      setLastCardFlip({ id: undefined, pairID: undefined });
     }
-  }, [resetGame]);
+    // parent to deal with other updates
+    handleCardClick(matchFound, incrementMoves);
+  }
   
   return (
-    <div className="gamecards">
-      <ul className="gamecards-list">
+    <div>
+      <ul>
       {
-        (deckOfCards !== null && gameReady)
+        (faces !== null)
         ?
-          deckOfCards.faces.map((card, key)=> (
-            <Card key={card.id} cover={deckOfCards.cover} face={card} alt={deckOfCards.alt} handleClick={handleClick} />
+          faces.map((card, key)=> (
+            <li key={key}>
+              <Card cover={cover} face={card} alt={alt} handleClick={handleClick} />
+            </li>
           ))
         :
           <li>

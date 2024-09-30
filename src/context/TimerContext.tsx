@@ -1,9 +1,15 @@
 import { createContext, useReducer, Dispatch, useContext } from "react";
-import { iTimerStateType, TimerActionType } from "../custom-types/types";
+import { iTimerStateType } from "../custom-types/types";
 
 
 type Props = {
   children: React.ReactNode;
+}
+
+// the start, pause, reset types are for the user to tell the system what to do
+// tick type is for internal use, so the system knows if to keep counting
+export type TimerActionType = {
+  type: 'tick' | 'pause' | 'start' | 'reset';
 }
 
 // we need the initial values for the context

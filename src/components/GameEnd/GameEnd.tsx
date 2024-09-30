@@ -5,9 +5,6 @@ import { useMovesContext } from "../../context/MovesContext";
 import { useTimerContext } from "../../context/TimerContext";
 // types
 import { iPlayerGameStats } from "../../custom-types/types";
-
-import ButtonChip from "../ButtonChip/ButtonChip";
-import './GameEnd.css';
 // modules still using require
 const BadWordsArray = require('badwords/array');
 const Filter = require('badwords-filter');
@@ -24,7 +21,7 @@ type NameErrorType = {
 
 // message for the user when they do what of the two errors
 const ERROR_SHORT_MSG = 'Your name has to be between 4 and 20 characters';
-const ERROR_PROFANITY_MSG = 'NO bad words..';
+const ERROR_PROFANITY_MSG = 'What did we say about bad words..';
 
 export default function GameEnd(): JSX.Element {
   // lets control this Form component
@@ -102,35 +99,35 @@ export default function GameEnd(): JSX.Element {
   }
 
   return (
-    <section className="gameend">
-      <header className="gameend-header">
-        <h2>Congratulations!</h2>
+    <article>
+      <header>
+        <h2>Congratulations</h2>
       </header>
       <div>
-        <form onSubmit={handleSubmit} className="gameend-form">
-          <label className="gameend-form__label">
-            <span>enter your name</span>
-            <input 
-              placeholder="max 20 characters" 
-              type="text" 
-              name="player_name" 
-              maxLength={20}
-              onChange={handlePlayerName}
-            />
-            {
-              nameError.profanity.error ? <p>{nameError.profanity.msg}</p> : <></>
-            }
-            {
-              nameError.short.error ? <p>{nameError.short.msg}</p> : <></>
-            }
-          </label>
-          <input 
-            type="submit" 
-            value="Continue"
-            className="button-chip button-chip__red button__shine-effect gameend-form__submit"
-          />
+        <form onSubmit={handleSubmit}>
+          <p>
+            <label>
+              <span>enter your name</span>
+              <input 
+                placeholder="max 20 characters" 
+                type="text" 
+                name="player_name" 
+                maxLength={20}
+                onChange={handlePlayerName}
+              />
+              {
+                nameError.profanity.error ? <span>{nameError.profanity.msg}</span> : <></>
+              }
+              {
+                nameError.short.error ? <span>{nameError.short.msg}</span> : <></>
+              }
+            </label>
+          </p>
+          <p>
+            <button type="submit">Continue</button>
+          </p>
         </form>
       </div>
-    </section>
+    </article>
   )
 }

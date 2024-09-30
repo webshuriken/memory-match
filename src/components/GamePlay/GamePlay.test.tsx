@@ -17,7 +17,7 @@ const cards: iCardsType = {
 
 describe('GamePlay component', () => {
   beforeEach(() => {
-    render(<GamePlay gameReady setGameReady={jest.fn} />);
+    render(<GamePlay setGameReady={jest.fn} />);
   });
 
   test('game component renders', () => {
