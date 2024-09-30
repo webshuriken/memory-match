@@ -1,1 +1,67 @@
+/* =============================
+ * Styles the components:
+ * - App
+ * - ButtonChip
+ * ============================= */
+.app {
+  margin: auto;
+  padding: 68px .8rem 0;
+  height: fit-content;
+  width: 100%;
+  max-width: 1200px;
+  padding-bottom: 2rem;
+}
 
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  grid-template-rows: 60px;
+  align-items: center;
+  padding: 0 .4rem;
+  width: 100%;
+  background: rgb(var(--primary-color));
+  z-index: 999;
+}
+.app-header > h1 {
+  padding: 0 .4rem;
+  font-size: 1.6rem;
+}
+
+/* =================
+ * == Button Chip
+ * ================= */
+.the-button-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 66px;
+  width: 66px;;
+}
+
+/* MEDIA QUERIES */
+@media screen and (min-width: 600px) {
+  .gameplay {
+    gap: 1.2rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .gameplay {
+    gap: 1.8rem;
+  }
+  .the-button-chip {
+    height: 80px;
+    width: 80px;
+  }
+}
+@media screen and (min-width: 992px) {
+  .app {
+    padding-top: 1rem;
+  }
+  .app-header {
+    position: absolute;
+    width: 30%;
+  }
+}

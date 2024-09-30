@@ -33,7 +33,7 @@ export default function Timer(): JSX.Element {
   const secs: string = seconds > 9 ? `${seconds}` : `0${seconds}`;
 
   return (
-    <article>
+    <article className="gamedash-timer">
       <p>Timer</p>
       <div role="timer" aria-label="game timer">{mins}:{secs}</div>
     </article>

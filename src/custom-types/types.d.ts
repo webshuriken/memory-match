@@ -1,4 +1,7 @@
-// DECK OF CARDS TYPES
+/* --|| DECK OF CARDS TYPES ||-- */
+
+// when dealing the memory cards each of the face cards
+// will have these properties added for game play purposes
 export interface iCardFacesType {
   src: string;
   id?: number;
@@ -6,6 +9,10 @@ export interface iCardFacesType {
   flipped?: boolean;
 }
 
+// the cards for each deck consists of:
+// alt: which is the message for each face card. As this is a memory game we cant be descriptive here.
+// faces: are the main memory cards made of the iCardFacesType
+// cover: is the cover image with its own alt as this one can describe the cards theme
 export interface iCardsType {
   alt: string;
   faces: iCardFacesType[];
@@ -15,6 +22,7 @@ export interface iCardsType {
   };
 }
 
+// Each deck of cards will have these properties to describe them.
 export interface iDeckOfCardsType {
   author: {
     name: string | string[];
@@ -25,10 +33,11 @@ export interface iDeckOfCardsType {
   theme: string;
 }
 
-// Component: Timer
+/* --|| Component: Timer ||-- */
+
 // The mins/secs are kept as number because they are easier to implement
 // builtin function to turn timer numbers into string
-// ticking property is so the ui knows that the timer is active
+// ticking property is so the ui knows that the timer is active or idle
 export interface iTimerStateType {
   ticking: boolean;
   minutes: number;
@@ -36,16 +45,34 @@ export interface iTimerStateType {
   timeToString: () => string
 }
 
-// Component: Moves
+// dispatch options available: start, pause, reset
+// tick type is for internal use, telling the system to keep going
+export type TimerActionType = {
+  type: 'tick' | 'pause' | 'start' | 'reset';
+}
+
+/* --|| Component: Moves ||-- */
+
 export type MovesStateType = {
   counter: number;
 }
 
+// dispatch options available: add, reset
 export type MovesActionType = {
   type: 'add' | 'reset';
 }
 
-// LEADERBOARD TYPES
+/* --|| Component GameEnd ||-- */
+// player stats
+export interface iPlayerGameStats {
+  moves: string;
+  name: string;
+  time: string;
+}
+
+/* --|| LEADERBOARD TYPES ||-- */
+
+// how we store each players past game stats
 export type LeaderboardType = {
   id: string;
   name: string;
@@ -54,20 +81,25 @@ export type LeaderboardType = {
   position: number;
 }
 
-// GAME SETTINGS
+export type LastGameStatsType = {
+  playerStats: LeaderboardType;
+  inLeaderboard: boolean;
+}
+
+/* --|| GAME SETTINGS ||-- */
+
+// the type for the settings available in the game
+// any new settings types can be added here
 export interface iGameSettingsType {
   deckOfCards: iDeckOfCardsType;
 }
 
-// player stats
-export interface iPlayerGameStats {
-  moves: string;
-  name: string;
-  time: string;
-}
-
 // GAME CONTEXT use with react router
-export interface iGameContextType extends iGameSettingsType {
+// It implements theGame settings and theLeaderboard
+export interface iGameContextType {
   theGame: iGameSettingsType;
-  theLeaderboard: LeaderboardType[];
+  leaderboard: [
+    theLeaderboard: LeaderboardType[],
+    setTheLeaderboard: (state) => LeaderboardType[],
+  ];
 }

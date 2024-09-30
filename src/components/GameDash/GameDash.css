@@ -1,0 +1,67 @@
+/* =============================
+ * Styles the components:
+ * - GameDash
+ * - div wrapper around ButtonChip
+ * - Timer
+ * - Moves
+ * ============================= */
+.gamedash {
+  display: grid;
+  grid-template-columns: 84px auto;
+  grid-template-rows: 1fr;
+  gap: .4rem;
+  justify-self: center;
+  width: min(400px, 100%);
+}
+
+.gamedash-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================
+ * == MOVES - TIMER
+ * ========================== */
+
+.gamedash-tracking {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.gamedash-moves,
+.gamedash-timer {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+}
+
+.gamedash-moves {}
+
+.gamedash-timer {}
+
+/* MEDIA QUERIES */
+@media screen and (min-width: 768px) {
+  .gamedash-tracking {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .gamedash {
+    grid-template-columns: 100%;
+    grid-template-rows: 160px auto;
+    padding-top: 3rem;
+  }
+  .gamedash-button button {
+    font-size: 1.2rem;
+  }
+  .gamedash-tracking {
+    flex-flow: column wrap;
+    gap: 1rem;
+    font-size: 1.4rem;
+  }
+}
