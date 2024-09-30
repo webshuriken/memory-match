@@ -15,7 +15,7 @@ export default function Nav(): JSX.Element {
     setMenu(state => {
       return {
         open: !state.open,
-        class: state.open ? 'menu open' : 'menu',
+        class: !state.open ? 'menu open' : 'menu',
       }
     });
   }
