@@ -24,6 +24,25 @@
   padding-bottom: 1rem;
 }
 
+/* ============================
+ * === DECKS LIST =====
+ * ============================ */
+.settings-decks-list {}
+
+.deck-view {}
+
+.deck-view__cover {}
+
+.deck-view__name {}
+
+.deck-view__authors {}
+
+.deck-view__button {}
+
+.deck-view__face-list {}
+.deck-view__face-list li {}
+.deck-view__face-list-img {}
+
 /* MEDIA QUERIES */
 @media screen and (min-width: 600px) {
   .settings {
