@@ -41,3 +41,13 @@ while(i <= nOfIDs) {
 
 return uniqueIDs;
 }
+
+/**
+ * Takes the name of an image and returns the URL made available by Cloudinary
+ * @param {string} imagePublicID - Cloudinary public ID for the image
+ * @returns {string} url of the image
+ */
+export function fetchImageURL(imagePublicID: string): string {
+  const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${process.env.REACT_APP_CLOUD_FOLDER}/${imagePublicID}`
+  return url;
+}

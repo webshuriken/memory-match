@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import GameCards from "../GameCards/GameCards";
 import GameDash from "../GameDash/GameDash";
-import { DeckOfCards } from "../../globals/gameData";
 import { useTimerDispatch, useTimerContext } from "../../context/TimerContext";
 import { useMovesDispatch } from "../../context/MovesContext";
+import { useSettings } from "../../routes/App/App";
 import './GamePlay.css';
 
 
@@ -17,6 +17,7 @@ type Props = {
 export default function GamePlay({ gameReady, setGameReady }: Props): JSX.Element {
   const [matchesFound, setMatchesFound] = useState<number>(0);
   const [resetGame, setResetGame] = useState<boolean>(false);
+  const [ settings ] = useSettings();
 
   // timer context
   const {ticking} = useTimerContext();
@@ -45,7 +46,9 @@ export default function GamePlay({ gameReady, setGameReady }: Props): JSX.Elemen
    * Takes care when a matching pair is found
    */
   function handleMatchFound(): void {
-    if (DeckOfCards.size === (matchesFound + 1)) {
+    // the size property is future proof so that we can increase the difficulty of the game
+    const { activeDeckIndex } = settings;
+    if (settings.availableDecks[activeDeckIndex].size === (matchesFound + 1)) {
       console.log("GAME: all matches found, ending game")
       // inform Game component the game has finished
       setTimeout(() => {
@@ -67,7 +70,7 @@ export default function GamePlay({ gameReady, setGameReady }: Props): JSX.Elemen
 
   return (
     <section className="gameplay">
-      <aside role="complementary" className="gamedash">
+      <aside className="gamedash">
         <GameDash setResetGame={setResetGame} />
       </aside>
       <GameCards gameReady={gameReady} resetGame={resetGame} setResetGame={setResetGame}  handleCardClick={handleCardClick} />

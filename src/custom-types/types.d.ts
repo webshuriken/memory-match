@@ -25,8 +25,8 @@ export interface iCardsType {
 // Each deck of cards will have these properties to describe them.
 export interface iDeckOfCardsType {
   author: {
-    name: string | string[];
-    site: string | string[];
+    name: string[];
+    site: string[];
   }
   cards: iCardsType;
   size: number;
@@ -91,13 +91,17 @@ export type LastGameStatsType = {
 // the type for the settings available in the game
 // any new settings types can be added here
 export interface iGameSettingsType {
-  deckOfCards: iDeckOfCardsType;
+  availableDecks: iDeckOfCardsType[];
+  activeDeckIndex: number;
 }
 
 // GAME CONTEXT use with react router
-// It implements theGame settings and theLeaderboard
+// It implements the Game settings and theLeaderboard
 export interface iGameContextType {
-  theGame: iGameSettingsType;
+  settings: [
+    settings: iGameSettingsType,
+    setSettings: (state) => iGameSettingsType
+  ];
   leaderboard: [
     theLeaderboard: LeaderboardType[],
     setTheLeaderboard: (state) => LeaderboardType[],

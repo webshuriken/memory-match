@@ -54,6 +54,14 @@ main {
   overflow: hidden;
 }
 
+.button-chip a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
 .button-chip__yellow,
 .button-chip__yellow a {
   background: rgb(var(--secondary-color));

@@ -1,19 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import Nav from '../../components/Nav/Nav';
-import { DeckOfCards, InitLeaderboard } from '../../globals/gameData'
+import { AvailableGameDecks, InitLeaderboard } from '../../globals/gameData'
 import { iGameSettingsType, iGameContextType, LeaderboardType } from '../../custom-types/types';
 import './App.css';
 
 export default function App(): JSX.Element {
-  const [theGame, setTheGame] = useState<iGameSettingsType>();
-  const [theLeaderboard, setTheLeaderboard] = useState<LeaderboardType[]>();
-
-  useEffect(() => {
-    // prep the game
-    setTheGame({ deckOfCards: DeckOfCards });
-    setTheLeaderboard(InitLeaderboard);
-  }, []);
+  const [settings, setSettings] = useState<iGameSettingsType>({ availableDecks: AvailableGameDecks, activeDeckIndex: 0 });
+  const [theLeaderboard, setTheLeaderboard] = useState<LeaderboardType[]>(InitLeaderboard);
 
   return (
     <div className="app">
@@ -22,16 +16,16 @@ export default function App(): JSX.Element {
         <Nav />
       </header>
       <main>
-        <Outlet context={{ theGame, leaderboard: [theLeaderboard, setTheLeaderboard] }} />
+        <Outlet context={{ settings: [settings, setSettings], leaderboard: [theLeaderboard, setTheLeaderboard] }} />
       </main>
     </div>
   );
 }
 
 // Game settings context
-export function useGame() {
+export function useSettings() {
   const gameContext = useOutletContext<iGameContextType>();
-  return gameContext.theGame;
+  return gameContext.settings;
 }
 
 // Leaderboard context
