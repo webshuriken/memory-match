@@ -9,8 +9,14 @@ export default function Settings(): JSX.Element {
   const [settings, setSettings] = useSettings();
   const msg = "Want to make some changes to the game?";
 
-  function handleClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-    console.log("WHEN YOU ARE NOT HERE WITH ME");
+  /**
+   * Changes the deck of cards we use for the game
+   * @param id number - the index of the deck
+   */
+  function updateActiveDeck(id: number): void {
+    const decks = settings.availableDecks;
+    const activeDeck = id;
+    setSettings({availableDecks: decks, activeDeckIndex: activeDeck})
   }
 
   return (
@@ -34,7 +40,7 @@ export default function Settings(): JSX.Element {
                       <img src={fetchImageURL(deck.cards.cover.src)} alt="" className="deck-view__cover" />
                       <h3 className="deck-view__name">{deck.theme}</h3>
                       <p className="deck-view__authors">{deck.author.name.join(", ")}</p>
-                      <button onClick={handleClick} className={`deck-view__button ${buttonState}`}>
+                      <button onClick={() => updateActiveDeck(index)} className={`deck-view__button ${buttonState}`}>
                         {buttonState}
                       </button>
                       <ul className="deck-view__face-list">
