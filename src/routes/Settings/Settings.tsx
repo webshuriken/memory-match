@@ -13,7 +13,7 @@ export default function Settings(): JSX.Element {
   return (
     <section className="settings">
       <PageHeader 
-        title="Leaderboard" 
+        title="Settings" 
         msg={msg}
       />
       <div className="settings-body">
@@ -23,33 +23,30 @@ export default function Settings(): JSX.Element {
             ?
               <p>NO SETTINGS AVAILABLE</p>
             :
-              settings.availableDecks.map((deck, index) => (
-                <li>
-                  <article className="deck-view">
-                    <img src={fetchImageURL(deck.cards.cover.src)} alt="" className="deck-view__cover" />
-                    <h3 className="deck-view__name">
-                      <span>Name: </span>
-                      {deck.theme}
-                    </h3>
-                    <p className="deck-view__authors">
-                      <span>Author(s): </span>
-                      {deck.author.name.join(", ")}
-                    </p>
-                    <button className="deck-view__button">
-                      {settings.activeDeckIndex === index ? "Active" : "disabled"}
-                    </button>
-                    <ul className="deck-view__face-list">
-                      {
-                        deck.cards.faces.map(face => (
-                          <li>
-                            <img src={fetchImageURL(face.src)} alt={deck.cards.alt} className="deck-view__face-list-img" />
-                          </li>
-                        ))
-                      }
-                    </ul>
-                  </article>
-                </li>
-              ))
+              settings.availableDecks.map((deck, index) => {
+                const buttonState = settings.activeDeckIndex === index ? "active" : "disabled";
+                return (
+                  <li>
+                    <article className="deck-view">
+                      <img src={fetchImageURL(deck.cards.cover.src)} alt="" className="deck-view__cover" />
+                      <h3 className="deck-view__name">{deck.theme}</h3>
+                      <p className="deck-view__authors">{deck.author.name.join(", ")}</p>
+                      <button className={`deck-view__button ${buttonState}`}>
+                        {buttonState}
+                      </button>
+                      <ul className="deck-view__face-list">
+                        {
+                          deck.cards.faces.map(face => (
+                            <li>
+                              <img src={fetchImageURL(face.src)} alt={deck.cards.alt} className="deck-view__face-list-img" />
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    </article>
+                  </li>
+                )
+            })
           }
         </ul>
       </div>
