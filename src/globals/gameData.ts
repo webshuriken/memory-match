@@ -5,7 +5,7 @@ import cardFacePlaceholderURL from './cards-yuki.png';
 
 // TODO: FEAT-Game-1: how we expose this data can be changed
 // exposes the images public id for the faces and cover.
-export const DeckOfCards: iDeckOfCardsType = {
+export const DefaultDeck: iDeckOfCardsType = {
   author: {
     name: [
       'Amy L Sutton',
