@@ -1,7 +1,7 @@
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import Card from "../Card/Card";
 import { useSettings } from "../../routes/App/App";
-import { createRandomIDs } from "../../utils";
+import { createRandomIDs, fetchImageURL } from "../../utils";
 import { iCardsType, iCardFacesType } from '../../custom-types/types'
 import './GameCards.css';
 
@@ -24,16 +24,6 @@ export default function GameCards({ gameReady, resetGame, setResetGame, handleCa
   // we just need the face cards and the cover
   const [deckOfCards, setDeckOfCards] = useState<iCardsType | null>(null);
   const [ settings ] = useSettings();
-
-  /**
-   * Takes the name of an image and returns the URL made available by Cloudinary
-   * @param {string} imagePublicID - Cloudinary public ID for the image
-   * @returns {string} url of the image
-   */
-  function fetchImageURL(imagePublicID: string): string {
-    const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${process.env.REACT_APP_CLOUD_FOLDER}/${imagePublicID}`
-    return url;
-  }
 
   /**
    * 
