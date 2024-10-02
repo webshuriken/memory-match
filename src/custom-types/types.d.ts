@@ -91,7 +91,8 @@ export type LastGameStatsType = {
 // the type for the settings available in the game
 // any new settings types can be added here
 export interface iGameSettingsType {
-  gameDeck: iDeckOfCardsType;
+  availableDecks: iDeckOfCardsType[];
+  activeDeckIndex: number;
 }
 
 // GAME CONTEXT use with react router

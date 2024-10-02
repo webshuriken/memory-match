@@ -46,7 +46,9 @@ export default function GamePlay({ gameReady, setGameReady }: Props): JSX.Elemen
    * Takes care when a matching pair is found
    */
   function handleMatchFound(): void {
-    if (settings.gameDeck.size === (matchesFound + 1)) {
+    // the size property is future proof so that we can increase the difficulty of the game
+    const { activeDeckIndex } = settings;
+    if (settings.availableDecks[activeDeckIndex].size === (matchesFound + 1)) {
       console.log("GAME: all matches found, ending game")
       // inform Game component the game has finished
       setTimeout(() => {

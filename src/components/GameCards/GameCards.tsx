@@ -161,8 +161,9 @@ export default function GameCards({ gameReady, resetGame, setResetGame, handleCa
   
   useEffect(() => {
     if (deckOfCards === null && gameReady) {
-      // we just need the current deck
-      const { gameDeck } = settings;
+      // we just need the current active deck
+      const { activeDeckIndex } = settings;
+      const gameDeck = settings.availableDecks[activeDeckIndex];
       // augment the cards. no need to change unless loading a new deck
       let augmentedCards = addCardsMeta(gameDeck.cards.faces);
       // construct augmented deck and shuffle cards

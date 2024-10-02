@@ -5,37 +5,39 @@ import cardFacePlaceholderURL from './cards-yuki.png';
 
 // TODO: FEAT-Game-1: how we expose this data can be changed
 // exposes the images public id for the faces and cover.
-export const DefaultDeck: iDeckOfCardsType = {
-  author: {
-    name: [
-      'Amy L Sutton',
-      'Carlos E Alford'
-    ],
-    site: [
-      'https://amythehatter.com/',
-      'https://carlosealford.com/'
-    ]
-  },
-  cards: {
-    alt: 'this is a memory card so, no peaking',
-    faces: [
-      { src: 'cards-blue_hair_uubbsf.png' },
-      { src: 'cards-haku_oxsscv.png' },
-      { src: 'cards-plant_me_thzzz5.png' },
-      { src: 'cards-dragon_plfggm.png' },
-      { src: 'cards-swirl_lady_gagxsr.png' },
-      { src: 'cards-spiral_eye_ueslyj.png' },
-      { src: 'cards-red_hair_f2hosm.png' },
-      { src: 'cards-yuki_greig0.png' }
-    ],
-    cover: {
-      alt: 'poker mixed with some old doodles',
-      src: 'cards-cover_tusv76.png'
+export const AvailableGameDecks: iDeckOfCardsType[] = [
+  {
+    author: {
+      name: [
+        'Amy L Sutton',
+        'Carlos E Alford'
+      ],
+      site: [
+        'https://amythehatter.com/',
+        'https://carlosealford.com/'
+      ]
     },
-  },
-  size: 8,
-  theme: 'poker ala doodles'
-}
+    cards: {
+      alt: 'this is a memory card so, no peaking',
+      faces: [
+        { src: 'cards-blue_hair_uubbsf.png' },
+        { src: 'cards-haku_oxsscv.png' },
+        { src: 'cards-plant_me_thzzz5.png' },
+        { src: 'cards-dragon_plfggm.png' },
+        { src: 'cards-swirl_lady_gagxsr.png' },
+        { src: 'cards-spiral_eye_ueslyj.png' },
+        { src: 'cards-red_hair_f2hosm.png' },
+        { src: 'cards-yuki_greig0.png' }
+      ],
+      cover: {
+        alt: 'poker mixed with some old doodles',
+        src: 'cards-cover_tusv76.png'
+      },
+    },
+    size: 8,
+    theme: 'poker ala doodles'
+  }
+];
 
 // exposes game data until we setup a proper backend
 export const InitLeaderboard: LeaderboardType[] = [
