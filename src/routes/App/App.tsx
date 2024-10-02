@@ -6,7 +6,7 @@ import { iGameSettingsType, iGameContextType, LeaderboardType } from '../../cust
 import './App.css';
 
 export default function App(): JSX.Element {
-  const [theGame, setTheGame] = useState<iGameSettingsType>({ gameDeck: DefaultDeck });
+  const [settings, setSettings] = useState<iGameSettingsType>({ gameDeck: DefaultDeck });
   const [theLeaderboard, setTheLeaderboard] = useState<LeaderboardType[]>(InitLeaderboard);
 
   return (
@@ -16,16 +16,16 @@ export default function App(): JSX.Element {
         <Nav />
       </header>
       <main>
-        <Outlet context={{ theGame, leaderboard: [theLeaderboard, setTheLeaderboard] }} />
+        <Outlet context={{ settings: [settings, setSettings], leaderboard: [theLeaderboard, setTheLeaderboard] }} />
       </main>
     </div>
   );
 }
 
 // Game settings context
-export function useGame() {
+export function useSettings() {
   const gameContext = useOutletContext<iGameContextType>();
-  return gameContext.theGame;
+  return gameContext.settings;
 }
 
 // Leaderboard context

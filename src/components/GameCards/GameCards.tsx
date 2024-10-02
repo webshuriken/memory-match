@@ -1,6 +1,6 @@
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import Card from "../Card/Card";
-import { useGame } from "../../routes/App/App";
+import { useSettings } from "../../routes/App/App";
 import { createRandomIDs } from "../../utils";
 import { iCardsType, iCardFacesType } from '../../custom-types/types'
 import './GameCards.css';
@@ -23,7 +23,7 @@ export default function GameCards({ gameReady, resetGame, setResetGame, handleCa
   const [flippedCards, setFlippedCards] = useState<FlippedCardsType>([]);
   // we just need the face cards and the cover
   const [deckOfCards, setDeckOfCards] = useState<iCardsType | null>(null);
-  const { gameDeck } = useGame();
+  const [ settings ] = useSettings();
 
   /**
    * Takes the name of an image and returns the URL made available by Cloudinary
@@ -161,6 +161,8 @@ export default function GameCards({ gameReady, resetGame, setResetGame, handleCa
   
   useEffect(() => {
     if (deckOfCards === null && gameReady) {
+      // we just need the current deck
+      const { gameDeck } = settings;
       // augment the cards. no need to change unless loading a new deck
       let augmentedCards = addCardsMeta(gameDeck.cards.faces);
       // construct augmented deck and shuffle cards

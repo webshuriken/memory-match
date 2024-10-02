@@ -2,7 +2,7 @@ import PageHeader from "../../components/PageHeader/PageHeader";
 import './Settings.css';
 
 
-const msg = "Page under construction";
+const msg = "Want to make some changes to the game?";
 
 export default function Settings(): JSX.Element {
   return (
