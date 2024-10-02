@@ -28,6 +28,9 @@
  * === DECKS LIST =====
  * ============================ */
 .settings-decks-list {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 2rem;
   width: 100%;
 }
 
@@ -98,6 +101,9 @@
   }
   .settings header {
     gap: 1rem;
+  }
+  .settings-decks-list {
+    gap: 3rem;
   }
 }
 
