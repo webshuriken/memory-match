@@ -25,8 +25,8 @@ export interface iCardsType {
 // Each deck of cards will have these properties to describe them.
 export interface iDeckOfCardsType {
   author: {
-    name: string | string[];
-    site: string | string[];
+    name: string[];
+    site: string[];
   }
   cards: iCardsType;
   size: number;
