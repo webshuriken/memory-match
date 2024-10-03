@@ -36,6 +36,37 @@ export const AvailableGameDecks: iDeckOfCardsType[] = [
     },
     size: 8,
     theme: 'poker ala doodles'
+  },
+  {
+    author: {
+      name: [
+        'Amy L Sutton',
+        'Carlos E Alford'
+      ],
+      site: [
+        'https://amythehatter.com/',
+        'https://carlosealford.com/'
+      ]
+    },
+    cards: {
+      alt: 'this is a memory card, no peaking',
+      faces: [
+        { src: 'cards-blue-fedora_aoiu1g.png' },
+        { src: 'cards-blue-rabbit_pjom9x.png' },
+        { src: 'cards-frog_vupmql.png' },
+        { src: 'cards-jester_lpobfb.png' },
+        { src: 'cards-red-fedora_tstayr.png' },
+        { src: 'cards-top-hat_akfhle.png' },
+        { src: 'cards-tricorn_bcqu31.png' },
+        { src: 'cards-solar-system_potlda.png' }
+      ],
+      cover: {
+        alt: 'amy sutton hat made of sinamey cubes of varying colours',
+        src: 'cards-cover_jhcag3.png'
+      },
+    },
+    size: 8,
+    theme: 'Amy the hatter, hats collection'
   }
 ];
 
