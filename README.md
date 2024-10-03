@@ -84,3 +84,7 @@ Here are some of the npm packages I used for the project:
 
 - [badwords-filter](https://www.npmjs.com/package/badwords-filter) An easy-to-use word filter with advanced detection techniques.
 - [badwords](https://www.npmjs.com/package/badwords) A highly consumable list of bad (profanity) English words based on the nice short and simple list found in Google's "what do you love" project made accessible by Jamie Wilkinson.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
