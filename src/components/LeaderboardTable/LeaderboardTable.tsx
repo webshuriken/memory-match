@@ -1,5 +1,5 @@
 import { useLeaderboard } from "../../routes/App/App";
-import { LeaderboardType, LastGameStatsType } from "../../custom-types/types";
+import { LastGameStatsType } from "../../custom-types/types";
 
 
 type Props = {

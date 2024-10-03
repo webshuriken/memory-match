@@ -78,7 +78,7 @@ export default function GameCards({ gameReady, resetGame, setResetGame, handleCa
 
     // locally mutate for further use and state update
     let newFlippedCards: FlippedCardsType;
-    if (flippedCards.length === 0 || flippedCards.length === 1 && flippedCards[0].id !== id) {
+    if (flippedCards.length === 0 || (flippedCards.length === 1 && flippedCards[0].id !== id)) {
       newFlippedCards = [...flippedCards, { id, pairID }];
       bustaMove = true;
     }else{

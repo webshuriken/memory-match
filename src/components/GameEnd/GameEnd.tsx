@@ -5,8 +5,6 @@ import { useMovesContext } from "../../context/MovesContext";
 import { useTimerContext } from "../../context/TimerContext";
 // types
 import { iPlayerGameStats } from "../../custom-types/types";
-
-import ButtonChip from "../ButtonChip/ButtonChip";
 import './GameEnd.css';
 // modules still using require
 const BadWordsArray = require('badwords/array');

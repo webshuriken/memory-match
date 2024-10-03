@@ -1,6 +1,4 @@
 import { LeaderboardType, iDeckOfCardsType } from "../custom-types/types"
-import cardBackPlaceholderURL from './cards-placeholder.png';
-import cardFacePlaceholderURL from './cards-yuki.png';
 
 
 // TODO: FEAT-Game-1: how we expose this data can be changed

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import Nav from '../../components/Nav/Nav';
 import { AvailableGameDecks, InitLeaderboard } from '../../globals/gameData'

@@ -22,14 +22,14 @@ export default function About(): JSX.Element {
           <h2>Team effort</h2>
           <ul className="about-team-list">
             <li>
-              <img src={amythehatterURL} height="60" width="60" alt="profile image" className="team-list__profile" />
+              <img src={amythehatterURL} height="60" width="60" alt="profile" className="team-list__profile" />
               <p className="team-list__profession">Miller / Character designer</p>
               <p>
                 <a href="https://amythehatter.com" className="team-list__name">Amy L Sutton @amythehatter</a>
               </p>
             </li>
             <li>
-              <img src={webshurikenURL} height="60" width="60" alt="profile image" className="team-list__profile" />
+              <img src={webshurikenURL} height="60" width="60" alt="profile" className="team-list__profile" />
               <p className="team-list__profession">Software Developer</p>
               <p>
                 <a href="https://carlosealford.com" className="team-list__name">Carlos E Alford @webshuriken</a>
