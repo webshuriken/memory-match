@@ -1,8 +1,14 @@
-# Memory Match
+# Memory Match :video_game:
 
-A fun memory game with cards, just find the pairs.
+A fun memory game with cards, just find the pairs. :balloon: [Play the game](https://webshuriken.github.io/memory-match/)
 
 ## Installation
+
+The game app is live but you can also play it locally.
+
+1. `Clone the repo`
+2. inside the repo folder `npm i` to install dependencies
+3. `npm start` to run the game on localhost:3000
 
 ## Features
 
