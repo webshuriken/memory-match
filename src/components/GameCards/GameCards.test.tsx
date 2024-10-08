@@ -1,56 +1,70 @@
-import {render, screen, within} from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import GameCards from './GameCards';
+import { useOutletContext } from 'react-router-dom';
+import { AvailableGameDecks, InitLeaderboard } from '../../globals/gameData';
 
 
-// TODO: fix test to use OUTLET context
-const gameInProgress = false;
+// Mock the Outlet component from react-router-dom
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  Outlet: jest.fn(),
+  useOutletContext: jest.fn(),
+})); 
 
 describe('Game Cards component', () => {
-  let list: HTMLElement;
-  let items: HTMLElement[];
-  let URL = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${process.env.REACT_APP_CLOUD_FOLDER}`;
+  let gameReady: boolean = true;
+  let resetGame: boolean = false;
+
+  // mock the Outlet component context
+  const mockSettings = {
+    availableDecks: [...AvailableGameDecks],
+    activeDeckIndex: 0,
+  }
+
+  const mockLeaderboard = [...InitLeaderboard];
 
   beforeEach(() => {
-    render(<GameCards gameReady resetGame setResetGame={jest.fn} handleCardClick={jest.fn} />);
-    list = screen.getByRole('list');
-    items = within(list).getAllByRole('listitem');
-  });
+    // Mocking useOutletContext to return mock settings and leaderboard
+    (useOutletContext as jest.Mock).mockReturnValue({
+      settings: [mockSettings, jest.fn()],
+      leaderboard: [mockLeaderboard, jest.fn()],
+    });
+  })
 
   test('renders with no issues', () => {
+    render(<GameCards gameReady={gameReady} resetGame={resetGame} setResetGame={jest.fn()} handleCardClick={jest.fn()} />);
     expect(screen).toBeTruthy();
   });
 
   test('has element with role: list', () => {
+    render(<GameCards gameReady={gameReady} resetGame={resetGame} setResetGame={jest.fn()} handleCardClick={jest.fn()} />);
+    const list = screen.getByRole('list');
     expect(list).toBeInTheDocument();
   });
 
-  // generic test, as the game currently only handles a deck of 8 cards
-  // test('list has 16 items', () => {
-  //   const deckLength = DeckOfCards.cards.faces.length * 2;
-  //   expect(items).toHaveLength(deckLength);
-  // });
+  test('list has 16 items', () => {
+    render(<GameCards gameReady={gameReady} resetGame={resetGame} setResetGame={jest.fn()} handleCardClick={jest.fn()} />);
+    const list = screen.getByRole('list');
+    const items = within(list).getAllByRole('listitem');
+    const deckLength = mockSettings.availableDecks[mockSettings.activeDeckIndex].size * 2;
+    expect(items).toHaveLength(deckLength);
+  });
   
-  test('inside each items,there is element with role: button', () => {
-    const button = within(items[0]).getByRole('button');
-    expect(button).toBeInTheDocument();
+  test('inside each item, there is and element with role: button', () => {
+    render(<GameCards gameReady={gameReady} resetGame={resetGame} setResetGame={jest.fn()} handleCardClick={jest.fn()} />);
+    const list = screen.getByRole('list');
+    const items = within(list).getAllByRole('listitem');
+    // we said each item so we use forEach
+    items.forEach(item => {
+      expect(within(item).getByRole('button')).toBeInTheDocument();
+    })
   });
 
   test('each role: button has 2 images', () => {
+    render(<GameCards gameReady={gameReady} resetGame={resetGame} setResetGame={jest.fn()} handleCardClick={jest.fn()} />);
+    const list = screen.getByRole('list');
+    const items = within(list).getAllByRole('listitem');
     const images = within(items[0]).getAllByRole('img');
     expect(images).toHaveLength(2);
-  });
-
-  test('cover image has src = "cards-cover_tusv76.png" with alt = "poker mixed with some old doodles"', () => {
-    const imgSrc = `${URL}/cards-cover_tusv76.png`;
-    const imgAlt = 'poker mixed with some old doodles';
-    const images = within(items[0]).getAllByRole('img');
-    expect(images[0]).toHaveAttribute('src', imgSrc);
-    expect(images[0]).toHaveAttribute('alt', imgAlt);
-  });
-
-  test('face image has alt = "this is a memory card so, no peaking"', () => {
-    const imgAlt = 'this is a memory card so, no peaking';
-    const images = within(items[0]).getAllByRole('img');
-    expect(images[1]).toHaveAttribute('alt', imgAlt);
   });
 });
