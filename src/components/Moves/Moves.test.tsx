@@ -1,34 +1,30 @@
-import { act, cleanup, render, screen, within } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import Moves from './Moves';
 import { MovesContext } from '../../context/MovesContext';
 
 
-describe('Moves component renders', () => {
-  let mother: HTMLElement;
-
-  beforeEach(() => {
-    render(<Moves />);
-    mother = screen.getByRole('article');
-  });
-
+describe('Moves component', () => {
   test('component renders within article element', () => {    
+    render(<Moves />);
+    const mother = screen.getByRole('article');
     expect(mother).toBeInTheDocument();
   });
   
   test('renders with a text saying Moves', () => {
-    const expectedText = 'Moves';
-    expect(within(mother).getByText(expectedText)).toBeInTheDocument();
+    render(<Moves />);
+    const mother = screen.getByRole('article');
+    expect(within(mother).getByText('Moves')).toBeInTheDocument();
   });
   
   test('moves counter text starts with 0', () => {
+    render(<Moves />);
+    const mother = screen.getByRole('article');
     expect(within(mother).getByText('0')).toBeInTheDocument();
   });
-});
-
-describe('Moves text reflects a users move', () => {
+  
   test('lets move twice and see the number 2', () => {
     const expectedText = 2;
-
+    
     render(
       <MovesContext.Provider value={expectedText}>
         <Moves />
