@@ -31,7 +31,7 @@ export default function Settings(): JSX.Element {
           {
             settings == null 
             ?
-              <p>NO SETTINGS AVAILABLE</p>
+              <li><p>NO SETTINGS AVAILABLE</p></li>
             :
               settings.availableDecks.map((deck, index) => {
                 const deckState = settings.activeDeckIndex === index ? "active" : "disabled";
