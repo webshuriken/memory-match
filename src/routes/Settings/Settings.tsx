@@ -26,23 +26,23 @@ export default function Settings(): JSX.Element {
         msg={msg}
       />
       <div className="settings-body">
+        <h3 className="settings-body__title">Available Decks</h3>
         <ul className="settings-decks-list">
           {
             settings == null 
             ?
-              <p>NO SETTINGS AVAILABLE</p>
+              <li><p>NO SETTINGS AVAILABLE</p></li>
             :
               settings.availableDecks.map((deck, index) => {
-                const buttonState = settings.activeDeckIndex === index ? "active" : "disabled";
+                const deckState = settings.activeDeckIndex === index ? "active" : "disabled";
                 return (
                   <li key={index}>
                     <article className="deck-view">
+                      <div className={`deck-view__status ${deckState}`}>{deckState}</div>
                       <img src={fetchImageURL(deck.cards.cover.src)} alt="" className="deck-view__cover" />
                       <h3 className="deck-view__name">{deck.theme}</h3>
                       <p className="deck-view__authors">{deck.author.name.join(", ")}</p>
-                      <button onClick={() => updateActiveDeck(index)} className={`deck-view__button ${buttonState}`}>
-                        {buttonState}
-                      </button>
+                      <button onClick={() => updateActiveDeck(index)} className="deck-view__button">Select Deck</button>
                       <ul className="deck-view__face-list">
                         {
                           deck.cards.faces.map(face => (

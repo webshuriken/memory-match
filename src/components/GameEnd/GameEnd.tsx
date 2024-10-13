@@ -115,6 +115,7 @@ export default function GameEnd(): JSX.Element {
               maxLength={20}
               onChange={handlePlayerName}
               autoFocus={true}
+              required={true}
             />
             {
               nameError.profanity.error ? <p>{nameError.profanity.msg}</p> : <></>
