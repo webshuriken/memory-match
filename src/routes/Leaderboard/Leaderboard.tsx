@@ -96,19 +96,6 @@ export default function Leaderboard(): JSX.Element {
         msg={lastGameStats == null ? msgs.default : lastGameStats.inLeaderboard ? msgs.good : msgs.bad }
       />
       <LeaderboardTable lastGameStats={lastGameStats} />
-      {
-        lastGameStats?.inLeaderboard ? <span></span> : (
-          <table className="leadboard-table looser-table">
-            <tbody>
-              <tr>
-                <td>{lastGameStats?.playerStats.name}</td>
-                <td>{lastGameStats?.playerStats.moves}</td>
-                <td>{lastGameStats?.playerStats.time}</td>
-              </tr>
-            </tbody>
-          </table>
-        )
-      }
     </section>
   )
 }
