@@ -16,6 +16,7 @@ The game app is live but you can also play it locally.
 - Cards flip on click
 - Settings allow for selection of different deck of cards
 - Leaderboard that shows the top 30 scores, currently locally only
+- Unit and Integrations tests. All components are tested.
 
 ## Tech Stack
 
