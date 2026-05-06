@@ -94,4 +94,4 @@ Here are some of the npm packages I used for the project:
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](LICENSE)
